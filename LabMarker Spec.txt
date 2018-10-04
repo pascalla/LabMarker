@@ -1,0 +1,42 @@
+// Just making notes for how the whole system meant to work
+// - Joshua Blackman 
+//
+//
+
+
+// Models/Database Structure
+Student:
+id/student_number/name
+
+Group:
+id/lab_id/name
+
+
+User:
+/id/name/email/password...
+	Marker: -- only access modules assigned to them, and see individual users
+
+	Lecturer: -- can fully access modules they created and can add markers to there modules (can create marker accounts?)
+
+	Overseer: -- can fully VIEW all modules but can not MODIFY
+
+	Administrator:  -- can fully MODIFY/VIEW everything. Can create other lecturers/markers
+
+	System Administrator -- can fully MODIFY/VIEW everything. Can create other administrators/lecturers/markers...
+
+
+
+Lab: -- "modules" 
+id/lecturer_id/course_code(module_code)
+
+Enrollment -- Students enrolled in each modules
+id/student_id/lab_id
+
+Task: -- Individual tasks for each module
+id/lab_id/name/marked_by(?)/expiry_date(?)
+
+TaskProgress -- Used to track the status of each task for the users
+id/user_id/task_id/status
+
+
+// Observers (For Permission Creation)
