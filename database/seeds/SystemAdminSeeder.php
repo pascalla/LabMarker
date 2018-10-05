@@ -22,5 +22,13 @@ class SystemAdminSeeder extends Seeder
       $user->save();
 
       $user->assignRole('system-admin');
+
+      $user = new User;
+      $user->name = "Stewart Powell";
+      $user->email = "stewart.powell@technocamps.com";
+      $user->password = Hash::make('password');
+      $user->save();
+
+      $user->assignRole('system-admin');
     }
 }
