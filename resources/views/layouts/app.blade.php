@@ -73,6 +73,8 @@
             </div>
         </nav>
 
+        @include('partials._messages')
+
         <main class="py-4">
             @yield('content')
         </main>

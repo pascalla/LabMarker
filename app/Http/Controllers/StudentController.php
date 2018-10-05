@@ -10,6 +10,8 @@ use App\Task;
 use App\TaskProgress;
 use App\Lab;
 
+use Session;
+
 class StudentController extends Controller
 {
   /**
@@ -56,6 +58,8 @@ class StudentController extends Controller
       $student->student_number = $request->student_number;
       $student->name = $request->student_name;
       $student->save();
+
+      Session::flash('success', 'You have created the student account for \'' . $student->name . '\'');
 
       return redirect()->route('student.index');
     }

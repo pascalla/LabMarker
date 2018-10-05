@@ -3,9 +3,10 @@
 use Illuminate\Database\Seeder;
 
 use App\User;
+use App\Student;
+
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use App\Student;
 
 class UsersTableSeeder extends Seeder
 {

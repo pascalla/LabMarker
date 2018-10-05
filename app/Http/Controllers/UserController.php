@@ -4,20 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\TaskProgress;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Hash;
 
-class TaskProgressController extends Controller
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+use App\User;
+
+use Session;
+
+class UserController extends Controller
 {
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
-
 
     /**
      * Display a listing of the resource.
@@ -26,7 +33,7 @@ class TaskProgressController extends Controller
      */
     public function index()
     {
-        //
+        return view('user.index');
     }
 
     /**
@@ -36,7 +43,7 @@ class TaskProgressController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -47,14 +54,39 @@ class TaskProgressController extends Controller
      */
     public function store(Request $request)
     {
-        $taskProgress = new TaskProgress;
-        $taskProgress->student_id = $request->student_id;
-        $taskProgress->task_id = $request->task_id;
-        $taskProgress->lab_id = $request->lab;
-        $taskProgress->status = 1;
-        $taskProgress->save();
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        // Generate random password and send it to them.
+        // but for now default it to pass
+        $user->password = Hash::make('pass');
+        $user->save();
 
-        return redirect()->route('student.show', $request->student_id);
+
+        // Permission handling
+        switch($request->role){
+          case 'Marker':
+            $user->assignRole('marker');
+            break;
+          case 'Lecturer':
+            $user->assignRole('lecturer');
+            break;
+          case 'Overseer':
+            $user->assignRole('overseer');
+            break;
+          case 'Admin':
+            $user->assignRole('admin');
+            break;
+          case 'System Admin':
+            $user->assignRole('system admin');
+            break;
+          default:
+            break;
+        }
+
+        Session::flash('success', 'You have created the user account \'' . $user->name . '\'');
+
+        return redirect()->route('user.create');
     }
 
     /**

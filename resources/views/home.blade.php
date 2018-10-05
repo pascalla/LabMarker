@@ -26,18 +26,15 @@
                       </a>
                     @endcan
 
+                    @can('create lecturer')
+                      <a href="{{ route('user.create') }}">
+                        <button class="btn btn-warning">Create Accounts</button>
+                      </a>
+                    @endcan
+
                     <a href="{{ route('lab.index') }}">
                       <button class="btn btn-info">View Lab's</button>
-                    </a>
-
-
-
-                    <p>Your Permissions</p>
-                    <ul>
-                      @foreach($permissions as $permission)
-                        <li>{{ $permission->name }}</li>
-                      @endforeach
-                    </ul>
+                    </a
                 </div>
             </div>
         </div>
