@@ -74,17 +74,20 @@ class StudentController extends Controller
     {
         $labs = array();
         $student = Student::findOrFail($id);
-        $enrolled = Enrollment::where('student_id', $student->id)->join('labs', 'lab_id', '=', 'labs.id')->get();
+        $enrolled = Enrollment::where('student_id', $student->id)->join('labs', 'lab_id', '=', 'labs.id')->get(array('labs.course_code', 'labs.id', 'student_id'));
 
         foreach($enrolled as $lab){
-          $tasks = Task::where('lab_id', $lab->lab_id)->get();
+
+          $taskStatus = array();
+          $lab_data = array();
+
+          $tasks = Task::where('lab_id', $lab->id)->get();
 
           $taskProgress = TaskProgress::where([
             ['student_id', '=', $student->id],
-            ['lab_id', '=', $lab->lab_id],
+            ['lab_id', '=', $lab->id],
           ])->get();
 
-          $tasksStatus = array();
 
           foreach($tasks as $task){
             if($taskProgress->contains('task_id', $task->id)){
@@ -95,8 +98,9 @@ class StudentController extends Controller
           }
 
           $lab_data = array('lab' => $lab, 'tasks' => $taskStatus);
-          $labs[$lab->lab_id] = $lab_data;
+          $labs[$lab->id] = $lab_data;
         }
+
 
         return view('student.show')->with('student', $student)->with('labs', $labs);
 
