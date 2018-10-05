@@ -24,7 +24,7 @@ Route::get('/lab/{id}', 'LabController@show')->name('lab.show')->middleware('che
 Route::post('/lab/store', 'LabController@store')->name('lab.store')->middleware('permission:create labs');
 
 // Marker Misc Route
-Route::post('/marker/add', 'MarkerController@assignLab')->name('marker.add')->middleware('modifyLabPermission');
+Route::post('/marker/add', 'MarkerController@assignLabMarker')->name('marker.add')->middleware('modifyLabPermission');
 
 // Task Routes
 Route::post('/task/store', 'TaskController@store')->name('task.store')->middleware('modifyLabPermission');
@@ -34,6 +34,7 @@ Route::delete('/task/{id}', 'TaskController@destroy')->name('task.destroy')->mid
 Route::get('/student/create', 'StudentController@create')->name('student.create')->middleware('permission:create lecturer');
 Route::get('/students', 'StudentController@index')->name('student.index')->middleware('permission:create lecturer');
 Route::get('/student/{id}', 'StudentController@show')->name('student.show');
+Route::post('/students', 'StudentController@show')->name('student.show');
 Route::post('/student/store', 'StudentController@store')->name('student.store')->middleware('permission:create lecturer');
 
 // Enrollment Routes

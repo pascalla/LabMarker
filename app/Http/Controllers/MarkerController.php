@@ -100,7 +100,7 @@ class MarkerController extends Controller
     }
 
 
-    public function assignLab(Request $request){
+    public function assignLabMarker(Request $request){
       $marker = User::findOrFail($request->marker_id);
       $marker->givePermissionTo('marker ' . $request->course_code);
       //return redirect()->route('lab.show', ['id' => $request->lab_id]);

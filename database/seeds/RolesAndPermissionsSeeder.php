@@ -34,6 +34,9 @@ class RolesAndPermissionsSeeder extends Seeder
       // create lecturer related permissions
       Permission::create(['name' => 'create lecturer']);
 
+      // create admin permission (how to check if admin)
+      Permission::create(['name' => 'admin']);
+
       // create admin related permissions
       Permission::create(['name' => 'create admin']);
 
@@ -57,7 +60,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
       // overseer has permission to view modules
       $role = Role::create(['name' => 'admin']);
-      $role->givePermissionTo(['view labs', 'create labs', 'create marker', 'create lecturer']);
+      $role->givePermissionTo(['view labs', 'create labs', 'create marker', 'create lecturer', 'admin']);
 
       // all permissions to system-admin
       $role = Role::create(['name' => 'system-admin']);

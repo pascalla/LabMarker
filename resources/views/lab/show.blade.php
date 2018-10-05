@@ -5,11 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <h1>{{ $lab->course_code }}</h1>
+            <!-- Marker/Lecturer/Overseer/Admin -->
             @if(auth()->user()->can('marker ' . $lab->course_code) || auth()->user()->can('view ' . $lab->course_code) || auth()->user()->can('view labs'))
             <div class="card mb-3">
                 <div class="card-header">Search Students</div>
                 <div class="card-body">
-                  {{ Form::open(array('route' => 'task.store')) }}
+                  <h3> Doesn't work, need to think about the frontend - Accessable via <a href="/student/1">URL</a> </h3>
+                  {{ Form::open(array('route' => 'student.show')) }}
                     <div class="form-group">
                     {{ Form::label('student_id', 'Student ID:')}}
                     {{ Form::text('student_id', old('student_id'), array('class' => 'form-control')) }}
@@ -21,7 +23,9 @@
                 </div>
             </div>
             @endif
-            @if(auth()->user()->can('lecturer ' . $lab->course_code) || auth()->user()->can('create lecturer'))
+
+            <!-- Lecturer and Admin only tools -->
+            @if(auth()->user()->can('lecturer ' . $lab->course_code) || auth()->user()->can('admin'))
             <div class="card mb-3">
                 <div class="card-header">Markers</div>
                 <div class="card-body">
@@ -44,8 +48,7 @@
                   </ul>
                 </div>
             </div>
-            @endif
-            @if(auth()->user()->can('lecturer ' . $lab->course_code) || auth()->user()->can('create lecturer'))
+
             <div class="card mb-3">
                 <div class="card-header">Tasks</div>
                 <div class="card-body">
@@ -67,14 +70,13 @@
                   </ul>
                 </div>
             </div>
-            @endif
-            @if(auth()->user()->can('lecturer ' . $lab->course_code) || auth()->user()->can('create lecturer'))
+
             <div class="card mb-3">
-                <div class="card-header">Students</div>
+                <div class="card-header">Enroll Students</div>
                 <div class="card-body">
                   {{ Form::open(array('route' => 'enrollment.store')) }}
                     <div class="form-group">
-                    {{ Form::label('student_id', 'Add Student:')}}
+                    {{ Form::label('student_id', 'Enroll Student:')}}
                     {{ Form::text('student_id', old('student_id'), array('class' => 'form-control')) }}
                     </div>
                     <div class="form-group">

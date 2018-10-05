@@ -24,7 +24,7 @@ class checkLabPermission
     {
         $user = Auth::user();
         $lab = Lab::findOrFail($request->route('id'));
-        if($user->hasAnyPermission(['marker ' . $lab->course_code, 'lecturer ' . $lab->course_code, 'create lecturer', 'view labs'])){
+        if($user->hasAnyPermission(['marker ' . $lab->course_code, 'admin', 'view labs'])){
           return $next($request);
         } else {
            return redirect()->route('lab.show', $lab->id);

@@ -24,7 +24,7 @@ class modifyLabPermission
      {
          $user = Auth::user();
          $lab = Lab::findOrFail($request->lab);
-         if($user->hasAnyPermission(['lecturer ' . $lab->course_code, 'create lecturer'])){
+         if($user->hasAnyPermission(['lecturer ' . $lab->course_code, 'admin'])){
            return $next($request);
          } else {
             return redirect()->route('lab.show', $lab->id);

@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    @can('create lecturer')
+                    @can('admin')
                       <a href="{{ route('student.index') }}">
                         <button class="btn btn-primary">Add Students</button>
                       </a>
@@ -22,7 +22,7 @@
 
                     @can('create labs')
                       <a href="{{ route('lab.create') }}">
-                        <button class="btn btn-primary">Create Lab</button>
+                        <button class="btn btn-secondary">Create Lab</button>
                       </a>
                     @endcan
 

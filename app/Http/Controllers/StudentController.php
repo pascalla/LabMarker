@@ -71,7 +71,7 @@ class StudentController extends Controller
         $studentData = array();
         $student = Student::findOrFail($id);
         $enrolled = Enrollment::where('student_id', $student->id)->get();
-        //$enrolled = Enrollment::where('student_id', $student->id)->join('labs', 'labs.id', '=', 'enrollments.lab_id')->get(array('labs.id', 'labs.course_code'));
+      
         foreach($enrolled as $lab){
           $tasks = Task::where('lab_id', $lab->lab_id)->get();
           $labInfo = Lab::where('id', $lab->lab_id)->get()->first();
