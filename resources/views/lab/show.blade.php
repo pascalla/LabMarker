@@ -11,7 +11,7 @@
                 <div class="card-header">Search Students</div>
                 <div class="card-body">
                   <h3> Doesn't work, need to think about the frontend - Accessable via <a href="/student/1">URL</a> </h3>
-                  {{ Form::open(array('route' => 'student.show')) }}
+                  {{ Form::open() }}
                     <div class="form-group">
                     {{ Form::label('student_id', 'Student ID:')}}
                     {{ Form::text('student_id', old('student_id'), array('class' => 'form-control')) }}

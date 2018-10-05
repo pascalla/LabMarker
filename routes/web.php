@@ -39,11 +39,13 @@ Route::post('/marker/add', 'MarkerController@assignLabMarker')->name('marker.add
 Route::post('/task/store', 'TaskController@store')->name('task.store')->middleware('modifyLabPermission');
 Route::delete('/task/{id}', 'TaskController@destroy')->name('task.destroy')->middleware('modifyLabPermission');
 
+// Task Progress Routes
+Route::post('/taskprogress/store', 'TaskProgressController@store')->name('taskprogress.store')->middleware('modifyLabPermission');
+
 // Student Routes
 Route::get('/student/create', 'StudentController@create')->name('student.create')->middleware('permission:create lecturer');
 Route::get('/students', 'StudentController@index')->name('student.index')->middleware('permission:create lecturer');
 Route::get('/student/{id}', 'StudentController@show')->name('student.show');
-Route::post('/students', 'StudentController@show')->name('student.show');
 Route::post('/student/store', 'StudentController@store')->name('student.store')->middleware('permission:create lecturer');
 
 // Enrollment Routes
