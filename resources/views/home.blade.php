@@ -26,9 +26,15 @@
                       </a>
                     @endcan
 
-                    @can('create lecturer')
+                    @can('admin')
                       <a href="{{ route('user.create') }}">
-                        <button class="btn btn-warning">Create Accounts</button>
+                        <button class="btn btn-warning">Create Users</button>
+                      </a>
+                    @endcan
+
+                    @can('admin')
+                      <a href="{{ route('user.index') }}">
+                        <button class="btn btn-success">View Users</button>
                       </a>
                     @endcan
 

@@ -33,7 +33,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.index');
+        $usersGrouped = array();
+        $roles = \Spatie\Permission\Models\Role::all()->reverse();
+        foreach($roles as $role){
+          $users = User::role($role)->get(); // Returns only users with the role 'writer'
+          $usersGrouped[$role->name] = $users;
+        }
+
+        return view('user.index')->with('users', $usersGrouped);
     }
 
     /**
