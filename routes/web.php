@@ -29,6 +29,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // User Routes
 Route::get('/user/create', 'UserController@create')->name('user.create')->middleware('permission:admin');
 Route::get('/users', 'UserController@index')->name('user.index')->middleware('permission:admin');
+Route::get('/user/{id}', 'UserController@show')->name('user.show')->middleware('permission:admin');
 Route::post('/user/store', 'UserController@store')->name('user.store')->middleware('permission:admin');
 
 // Lab Routes

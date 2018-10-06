@@ -11,11 +11,11 @@
                     <table class="table table-sm">
                       <tr>
                         <th>Name</th>
-                        <th>Options</th>
+                        <th>Roles</th>
                       </tr>
                       @foreach($role_users as $user)
                       <tr>
-                        <td>{{ $user->name }}</td>
+                        <td><a href="{{ route('user.show', $user->id)}}">{{ $user->name }}</a></td>
                         <td>Options</td>
                       </tr>
                       @endforeach
