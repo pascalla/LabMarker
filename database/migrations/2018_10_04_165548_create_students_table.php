@@ -17,6 +17,7 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->integer('student_number')->unique();
             $table->string('name');
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });

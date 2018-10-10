@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+use Auth;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -25,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Auth::provider('studentuserprovider', function($app, array $config) {
+            return new StudentUserProvider($app['hash'], $config['model']);
+        });
     }
 }

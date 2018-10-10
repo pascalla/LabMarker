@@ -24,6 +24,11 @@ class StudentController extends Controller
         $this->middleware('auth');
     }
 
+    public function home()
+    {
+      return view('student.home');
+    }
+
 
     /**
      * Display a listing of the resource.

@@ -5,7 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Student extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class Student extends Authenticatable
 {
   use SoftDeletes;
 

@@ -18,6 +18,10 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+Route::post('student/login', 'Auth\StudentLoginController@login')->name('student.login');
+Route::post('student/logout', 'Auth\StudentLoginController@logout')->name('student.logout');
+
+
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -25,6 +29,7 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/student/home', 'StudentController@home')->name('student.home')->middleware('auth:students');
 
 // User Routes
 Route::get('/user/create', 'UserController@create')->name('user.create')->middleware('permission:admin');
