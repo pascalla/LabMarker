@@ -6,41 +6,25 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
-
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                  <h1>Lab Class Tracker - Home</h1>
+                  <p>Welcome to the Lab Class Tracker. Here you can view your lab class progress and marks.</p>
+                  <a href="{{ route('lab.index') }}"><button class="btn btn-primary">Marker System</button></a>
 
-                    @can('admin')
-                      <a href="{{ route('student.index') }}">
-                        <button class="btn btn-primary">Add Students</button>
-                      </a>
-                    @endcan
+                  @can('create labs')
+                    <h1>Manage Labs</h1>
+                    @foreach($labs as $lab)
+                      @if(auth()->user()->can('marker ' . $lab->course_code) || auth()->user()->can('view labs'))
+                        <a href="{{ route('lab.show', $lab->id) }}"><button class="btn btn-primary">{{ $lab->course_code }}</button></a>
+                      @endif
+                    @endforeach
+                    <a href="{{ route('lab.create') }}"><button class="btn btn-success">Create New Lab</button></a>
+                  @endcan
 
-                    @can('create labs')
-                      <a href="{{ route('lab.create') }}">
-                        <button class="btn btn-secondary">Create Lab</button>
-                      </a>
-                    @endcan
-
-                    @can('admin')
-                      <a href="{{ route('user.create') }}">
-                        <button class="btn btn-warning">Create Users</button>
-                      </a>
-                    @endcan
-
-                    @can('admin')
-                      <a href="{{ route('user.index') }}">
-                        <button class="btn btn-success">View Users</button>
-                      </a>
-                    @endcan
-
-                    <a href="{{ route('lab.index') }}">
-                      <button class="btn btn-info">View Lab's</button>
-                    </a
+                  @can('admin')
+                    <h1>Admin</h1>
+                    <button class="btn btn-primary">Users</button>
+                  @endcan
                 </div>
             </div>
         </div>

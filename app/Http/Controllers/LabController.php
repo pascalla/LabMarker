@@ -80,7 +80,7 @@ class LabController extends Controller
         $tasks = Task::where('lab_id', $lab->id)->get();
 
         $students = Enrollment::where('lab_id', $lab->id)->join('students', 'student_id', '=', 'students.id')->get(array('students.name', 'students.id', 'students.student_number'));
-
+        
         return view('lab.show')->with('lab', $lab)->with('markers', $markers)->with('tasks', $tasks)->with('students', $students);
     }
 

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('style')
+<link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -10,16 +14,14 @@
             <div class="card mb-3">
                 <div class="card-header">Search Students</div>
                 <div class="card-body">
-                  <h3> Doesn't work, need to think about the frontend - Accessable via <a href="/student/1">URL</a> </h3>
-                  {{ Form::open() }}
                     <div class="form-group">
-                    {{ Form::label('student_id', 'Student ID:')}}
-                    {{ Form::text('student_id', old('student_id'), array('class' => 'form-control')) }}
+                    <label for="student_number">Search Students</label>
+                    <select type="select" id="student" name="student" class="input-students form-control">
+                      @foreach($students as $student)
+                        <option value="{{ $student->id }}" data-url="{{ route('student.show', $student->id) }}">{{ $student->name }} ({{ $student->student_number }})</option>
+                      @endforeach
+                    </select>
                     </div>
-                    <div class="form-group">
-                      {{ Form::submit('Search', array('class' => 'btn  btn-primary btn-block'))}}
-                    </div>
-                  {{ Form::close() }}
                 </div>
             </div>
             @endif
@@ -96,4 +98,18 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript" src="{{ asset('js/select2.min.js')}}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.input-students').select2();
+});
+
+$("#student").on("select2:select", function (e) {
+  var url = $('select.input-students').find(':selected').data('url');
+  window.location.href = url;
+});
+</script>
 @endsection

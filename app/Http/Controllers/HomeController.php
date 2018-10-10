@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 use App\User;
+use App\Lab;
 use Auth;
 
 class HomeController extends Controller
@@ -29,9 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-
-        $permissions = $user->getAllPermissions();
-        return view('home')->with('permissions', $permissions);
+        $labs = Lab::all();
+        return view('home')->with('labs', $labs);
     }
 }
