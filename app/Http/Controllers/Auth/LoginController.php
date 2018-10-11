@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -20,6 +22,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected $guard = 'cosi';
+
     /**
      * Where to redirect users after login.
      *
@@ -35,5 +39,25 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            'identifier' => 'required',
+            'password' => 'required',
+            // new rules here
+        ]);
+    }
+
+
+    public function username(){
+      return 'identifier';
+    }
+
+
+    protected function guard(){
+       return Auth::guard('cosi');
     }
 }

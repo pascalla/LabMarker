@@ -23,7 +23,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:cosi');
     }
 
     /**
@@ -62,11 +62,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        // Generate random password and send it to them.
-        // but for now default it to pass
-        $user->password = Hash::make('pass');
+        $user->identifier = $request->identifier;
         $user->save();
 
 
@@ -84,10 +80,8 @@ class UserController extends Controller
           case 'Admin':
             $user->assignRole('admin');
             break;
-          case 'System Admin':
-            $user->assignRole('system admin');
-            break;
           default:
+            $user->assignRole('student')
             break;
         }
 

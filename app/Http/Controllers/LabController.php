@@ -20,7 +20,7 @@ class LabController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:cosi');
     }
 
     /**
@@ -79,8 +79,8 @@ class LabController extends Controller
 
         $tasks = Task::where('lab_id', $lab->id)->get();
 
-        $students = Enrollment::where('lab_id', $lab->id)->join('students', 'student_id', '=', 'students.id')->get(array('students.name', 'students.id', 'students.student_number'));
-        
+        $students = Enrollment::where('lab_id', $lab->id)->join('users', 'identifier', '=', 'users.id')->get(array('students.identifier'));
+
         return view('lab.show')->with('lab', $lab)->with('markers', $markers)->with('tasks', $tasks)->with('students', $students);
     }
 

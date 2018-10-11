@@ -18,80 +18,10 @@
                     <label for="student_number">Search Students</label>
                     <select type="select" id="student" name="student" class="input-students form-control">
                       @foreach($students as $student)
-                        <option value="{{ $student->id }}" data-url="{{ route('student.show', $student->id) }}">{{ $student->name }} ({{ $student->student_number }})</option>
+                        <option value="{{ $student->id }}" data-url="{{ route('student.show', $student->id) }}">{{ $student->name }} ({{ $student->identifier }})</option>
                       @endforeach
                     </select>
                     </div>
-                </div>
-            </div>
-            @endif
-
-            <!-- Lecturer and Admin only tools -->
-            @if(auth()->user()->can('lecturer ' . $lab->course_code) || auth()->user()->can('admin'))
-            <div class="card mb-3">
-                <div class="card-header">Markers</div>
-                <div class="card-body">
-                  {{ Form::open(array('route' => 'marker.add')) }}
-                    <div class="form-group">
-                    {{ Form::label('marker_id', 'Add Marker:')}}
-                    {{ Form::text('marker_id', old('marker_id'), array('class' => 'form-control')) }}
-                    </div>
-                    <div class="form-group">
-                      {{ Form::hidden('course_code', $lab->course_code) }}
-                      {{ Form::hidden('lab', $lab->id) }}
-                      {{ Form::submit('Add', array('class' => 'btn  btn-primary btn-block'))}}
-                    </div>
-                  {{ Form::close() }}
-                  <h2> Markers </h2>
-                  <ul>
-                  @foreach ($markers as $marker)
-                    <li>{{$marker->name}}</li>
-                  @endforeach
-                  </ul>
-                </div>
-            </div>
-
-            <div class="card mb-3">
-                <div class="card-header">Tasks</div>
-                <div class="card-body">
-                  {{ Form::open(array('route' => 'task.store')) }}
-                    <div class="form-group">
-                    {{ Form::label('task_name', 'Add Task:')}}
-                    {{ Form::text('task_name', old('task_name'), array('class' => 'form-control')) }}
-                    </div>
-                    <div class="form-group">
-                      {{ Form::hidden('lab', $lab->id) }}
-                      {{ Form::submit('Add', array('class' => 'btn  btn-primary btn-block'))}}
-                    </div>
-                  {{ Form::close() }}
-                  <h2> Tasks </h2>
-                  <ul>
-                  @foreach ($tasks as $task)
-                    <li>{{$task->name}}</li>
-                  @endforeach
-                  </ul>
-                </div>
-            </div>
-
-            <div class="card mb-3">
-                <div class="card-header">Enroll Students</div>
-                <div class="card-body">
-                  {{ Form::open(array('route' => 'enrollment.store')) }}
-                    <div class="form-group">
-                    {{ Form::label('student_id', 'Enroll Student:')}}
-                    {{ Form::text('student_id', old('student_id'), array('class' => 'form-control')) }}
-                    </div>
-                    <div class="form-group">
-                      {{ Form::hidden('lab', $lab->id) }}
-                      {{ Form::submit('Add Student', array('class' => 'btn  btn-primary btn-block'))}}
-                    </div>
-                  {{ Form::close() }}
-                  <h2> Students </h2>
-                  <ul>
-                  @foreach ($students as $student)
-                    <li>{{$student->name}}</li>
-                  @endforeach
-                  </ul>
                 </div>
             </div>
             @endif

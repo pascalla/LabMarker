@@ -46,9 +46,9 @@ return [
             'provider' => 'users',
         ],
 
-        'students' => [
+        'cosi' => [
             'driver' => 'session',
-            'provider' => 'students',
+            'provider' => 'cosi',
         ],
     ],
 
@@ -74,10 +74,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-        'students' => [
-            'driver' => 'studentuserprovider',
-            'model' => App\Student::class,
-            'table' => 'students',
+        'cosi' => [
+            'driver' => 'cosiuserprovider',
+            'model' => App\User::class,
+            'table' => 'userss',
         ],
 
         // 'users' => [

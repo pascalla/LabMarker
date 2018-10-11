@@ -15,7 +15,7 @@ class TaskProgressController extends Controller
    */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth:cosi');
     }
 
 
@@ -48,7 +48,7 @@ class TaskProgressController extends Controller
     public function store(Request $request)
     {
         $taskProgress = new TaskProgress;
-        $taskProgress->student_id = $request->student_id;
+        $taskProgress->identifier = $request->student_id;
         $taskProgress->task_id = $request->task_id;
         $taskProgress->lab_id = $request->lab;
         $taskProgress->status = 1;

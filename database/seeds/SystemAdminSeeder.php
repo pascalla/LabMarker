@@ -16,19 +16,13 @@ class SystemAdminSeeder extends Seeder
     public function run()
     {
       $user = new User;
-      $user->name = "Joshua Blackman";
-      $user->email = "jhawsh@gmail.com";
-      $user->password = Hash::make('changeme123');
+      $user->identifier = "921340";
       $user->save();
-
-      $user->assignRole('system-admin');
+      $user->assignRole('admin');
 
       $user = new User;
-      $user->name = "Stewart Powell";
-      $user->email = "stewart.powell@technocamps.com";
-      $user->password = Hash::make('password');
+      $user->identifier = "s.w.powell";
       $user->save();
-
-      $user->assignRole('system-admin');
+      $user->assignRole('admin');
     }
 }

@@ -15,7 +15,7 @@ class CreateEnrollmentsTable extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id');
+            $table->integer('user_id');
             $table->integer('lab_id');
             $table->timestamps();
             $table->softDeletes();

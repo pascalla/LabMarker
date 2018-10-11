@@ -15,7 +15,7 @@ class CreateTasksProgressTable extends Migration
     {
         Schema::create('tasks_progress', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id');
+            $table->integer('user_id');
             $table->integer('lab_id');
             $table->integer('task_id');
             $table->boolean('status');

@@ -40,12 +40,10 @@ class RolesAndPermissionsSeeder extends Seeder
       // create admin related permissions
       Permission::create(['name' => 'create admin']);
 
-      // create system-admin related permissions
-      Permission::create(['name' => 'create system-admin']);
-
       /*
       * create roles and assign created permissions
       */
+      $role = Role::create(['name' => 'student']);
 
       // marker has no default permissions
       $role = Role::create(['name' => 'marker']);
@@ -60,10 +58,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
       // overseer has permission to view modules
       $role = Role::create(['name' => 'admin']);
-      $role->givePermissionTo(['view labs', 'create labs', 'create marker', 'create lecturer', 'admin']);
-
-      // all permissions to system-admin
-      $role = Role::create(['name' => 'system-admin']);
       $role->givePermissionTo(Permission::all());
     }
 }

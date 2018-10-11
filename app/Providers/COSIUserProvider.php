@@ -5,12 +5,12 @@ namespace App\Providers;
 use Illuminate\Auth\EloquentUserProvider as UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
-use App\Student;
+use App\User;
 
 use XPathSelector\Selector;
 use XPathSelector\Exception\NodeNotFoundException;
 
-class StudentUserProvider extends UserProvider {
+class COSIUserProvider extends UserProvider {
 
   public function retrieveByCredentials(array $credentials)
   {
@@ -19,7 +19,7 @@ class StudentUserProvider extends UserProvider {
       }
 
       // Assume we are logging in with a phone number
-      return Student::where('student_number', $credentials['student_number'])->first();
+      return User::where('identifier', $credentials['identifier'])->first();
   }
 
     public function validateCredentials(UserContract $user, array $credentials)
@@ -42,7 +42,7 @@ class StudentUserProvider extends UserProvider {
 
         $response = $client->request('POST', 'https://science.swansea.ac.uk/intranet/accounts/login/', [
             'form_params' => [
-                'username' => $credentials['student_number'],
+                'username' => $credentials['identifier'],
                 'password' => $credentials['password'],
                 'csrfmiddlewaretoken' => $csrf
             ],

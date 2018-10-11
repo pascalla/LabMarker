@@ -27,8 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Auth::provider('studentuserprovider', function($app, array $config) {
-            return new StudentUserProvider($app['hash'], $config['model']);
+        Auth::provider('cosiuserprovider', function($app, array $config) {
+            return new COSIUserProvider($app['hash'], $config['model']);
         });
     }
 }
