@@ -14,8 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'cosi',
     ],
 
     /*
@@ -36,19 +35,17 @@ return [
     */
 
     'guards' => [
+        'cosi' => [
+            'driver' => 'session',
+            'provider' => 'cosi',
+        ],
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
-        ],
-
-        'cosi' => [
-            'driver' => 'session',
-            'provider' => 'cosi',
         ],
     ],
 
@@ -70,20 +67,15 @@ return [
     */
 
     'providers' => [
+      'cosi' => [
+          'driver' => 'cosiuserprovider',
+          'model' => App\User::class,
+          'table' => 'userss',
+      ],
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-        'cosi' => [
-            'driver' => 'cosiuserprovider',
-            'model' => App\User::class,
-            'table' => 'userss',
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
