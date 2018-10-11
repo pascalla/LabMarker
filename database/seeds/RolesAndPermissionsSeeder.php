@@ -22,38 +22,38 @@ class RolesAndPermissionsSeeder extends Seeder
       */
 
       // create student related permissions
-      Permission::create(['name' => 'create student']);
+      Permission::create(['guard_name' => 'cosi', 'name' => 'create student']);
 
       // create module related permissions
-      Permission::create(['name' => 'create labs']);
-      Permission::create(['name' => 'view labs']);
+      Permission::create(['guard_name' => 'cosi', 'name' => 'create labs']);
+      Permission::create(['guard_name' => 'cosi', 'name' => 'view labs']);
 
       // create marker related permissions
-      Permission::create(['name' => 'create marker']);
+      Permission::create(['guard_name' => 'cosi', 'name' => 'create marker']);
 
       // create lecturer related permissions
-      Permission::create(['name' => 'create lecturer']);
+      Permission::create(['guard_name' => 'cosi', 'name' => 'create lecturer']);
 
       // create admin permission (how to check if admin)
-      Permission::create(['name' => 'admin']);
+      Permission::create(['guard_name' => 'cosi', 'name' => 'admin']);
 
       // create admin related permissions
-      Permission::create(['name' => 'create admin']);
+      Permission::create(['guard_name' => 'cosi', 'name' => 'create admin']);
 
       /*
       * create roles and assign created permissions
       */
-      $role = Role::create(['name' => 'student']);
+      $role = Role::create(['guard_name' => 'cosi', 'name' => 'student']);
 
       // marker has no default permissions
-      $role = Role::create(['name' => 'marker']);
+      $role = Role::create(['guard_name' => 'cosi', 'name' => 'marker']);
 
       // lecturer has permission to create modules and add markers
-      $role = Role::create(['name' => 'lecturer']);
+      $role = Role::create(['guard_name' => 'cosi', 'name' => 'lecturer']);
       $role->givePermissionTo(['create labs', 'create marker']);
 
       // overseer has permission to view modules
-      $role = Role::create(['name' => 'overseer']);
+      $role = Role::create(['guard_name' => 'cosi', 'name' => 'overseer']);
       $role->givePermissionTo(['view labs']);
 
       // overseer has permission to view modules
