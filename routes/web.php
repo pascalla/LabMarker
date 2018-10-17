@@ -29,6 +29,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // User Routes
 Route::get('/user/create', 'UserController@create')->name('user.create')->middleware('permission:admin');
+Route::get('/user/bulkcreate', 'UserController@create')->name('user.bulkcreate')->middleware('permission:admin');
 Route::get('/users', 'UserController@index')->name('user.index')->middleware('permission:admin');
 Route::get('/user/{id}', 'UserController@show')->name('user.show')->middleware('permission:admin');
 Route::post('/user/store', 'UserController@store')->name('user.store')->middleware('permission:admin');
@@ -48,12 +49,6 @@ Route::delete('/task/{id}', 'TaskController@destroy')->name('task.destroy')->mid
 
 // Task Progress Routes
 Route::post('/taskprogress/store', 'TaskProgressController@store')->name('taskprogress.store')->middleware('modifyLabPermission');
-
-// Student Routes
-Route::get('/student/create', 'StudentController@create')->name('student.create')->middleware('permission:create lecturer');
-Route::get('/students', 'StudentController@index')->name('student.index')->middleware('permission:create lecturer');
-Route::get('/student/{id}', 'StudentController@show')->name('student.show');
-Route::post('/student/store', 'StudentController@store')->name('student.store')->middleware('permission:create lecturer');
 
 // Enrollment Routes
 Route::post('/enrollment/store', 'EnrollmentController@store')->name('enrollment.store')->middleware('modifyLabPermission');
