@@ -23,7 +23,7 @@
 
                   @can('admin')
                     <h1>Admin</h1>
-                    <button class="btn btn-primary">Users</button>
+                      <a href="{{ route('user.index') }}"><button class="btn btn-primary">Users</button></a>
                   @endcan
                 </div>
             </div>
