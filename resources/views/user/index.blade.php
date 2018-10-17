@@ -4,9 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <h1> Users </h1>
+            <a href="{{ route('user.create') }}"><button class="btn btn-primary">Create User</button></a>
+            <a href="{{ route('user.bulkcreate') }}"><button class="btn btn-primary">Bulk Create Users</button></a>
             @foreach ($users as $role_name => $role_users)
               <div class="card mt-5">
-                  <div class="card-header">{{ $role_name }}</div>
+                  <div class="card-header">{{ $role_name }} ({{ $role_users->count() }})</div>
                   <div class="card-body">
                     <table class="table table-sm">
                       <tr>
