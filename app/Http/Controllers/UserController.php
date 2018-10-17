@@ -63,11 +63,14 @@ class UserController extends Controller
     {
         $user = new User;
         $user->identifier = $request->identifier;
+        $user->name = $request->name;
         $user->save();
 
 
         // Permission handling
         switch($request->role){
+          case 'Student':
+            $user->assignRole('student');
           case 'Marker':
             $user->assignRole('marker');
             break;
@@ -81,7 +84,7 @@ class UserController extends Controller
             $user->assignRole('admin');
             break;
           default:
-            $user->assignRole('student')
+            $user->assignRole('student');
             break;
         }
 
