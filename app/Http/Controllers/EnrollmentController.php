@@ -50,7 +50,7 @@ class EnrollmentController extends Controller
     {
 
         $enrollment = new Enrollment;
-        $enrollment->student_id = $request->student_id;
+        $enrollment->identifier = $request->user_identifier;
         $enrollment->lab_id = $request->lab;
         $enrollment->save();
 

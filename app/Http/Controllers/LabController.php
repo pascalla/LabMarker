@@ -79,9 +79,20 @@ class LabController extends Controller
 
         $tasks = Task::where('lab_id', $lab->id)->get();
 
-        $students = Enrollment::where('lab_id', $lab->id)->join('users', 'identifier', '=', 'users.id')->get(array('students.identifier'));
+        $students = Enrollment::where('lab_id', $lab->id)->join('users', 'identifier', '=', 'users.identifier')->get(array('users.identifier'));
 
         return view('lab.show')->with('lab', $lab)->with('markers', $markers)->with('tasks', $tasks)->with('students', $students);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showModify($id)
+    {
+        return view('lab.showModify');
     }
 
     /**
