@@ -38,7 +38,12 @@ Route::post('/user/store', 'UserController@store')->name('user.store')->middlewa
 Route::get('/lab/create', 'LabController@create')->name('lab.create')->middleware('permission:create labs');
 Route::get('/labs', 'LabController@index')->name('lab.index');
 Route::get('/lab/{id}', 'LabController@show')->name('lab.show')->middleware('checkLabPermission');
-Route::get('/lab/{id}/modify', 'LabController@showModify')->name('lab.modify')->middleware('checkLabPermission');
+Route::get('/lab/{id}/modify', 'LabController@modify')->name('lab.modify')->middleware('modifyLabPermission');
+Route::get('/lab/{id}/edit', 'LabController@edit')->name('lab.edit')->middleware('modifyLabPermission');
+Route::get('/lab/{id}/progress', 'LabController@progress')->name('lab.progress')->middleware('modifyLabPermission');
+Route::get('/lab/{id}/groups', 'LabController@groups')->name('lab.groups')->middleware('modifyLabPermission');
+Route::get('/lab/{id}/enroll', 'LabController@enroll')->name('lab.enroll')->middleware('modifyLabPermission');
+Route::get('/lab/{id}/tasks', 'LabController@tasks')->name('lab.tasks')->middleware('modifyLabPermission');
 Route::post('/lab/store', 'LabController@store')->name('lab.store')->middleware('permission:create labs');
 
 

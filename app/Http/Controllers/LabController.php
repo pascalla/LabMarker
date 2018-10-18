@@ -90,10 +90,12 @@ class LabController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showModify($id)
+    public function modify($id)
     {
-        return view('lab.showModify');
+        $lab = Lab::findOrFail($id);
+        return view('lab.modify')->with('lab', $lab);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -103,8 +105,30 @@ class LabController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('lab.edit');
     }
+
+    public function tasks($id)
+    {
+      return view('lab.tasks');
+    }
+
+    public function enroll($id)
+    {
+      return view('lab.enroll');
+    }
+
+    public function groups($id)
+    {
+      return view('lab.groups');
+    }
+
+    public function progress($id)
+    {
+      return view('lab.progress');
+    }
+
+
 
     /**
      * Update the specified resource in storage.

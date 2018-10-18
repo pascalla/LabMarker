@@ -7,6 +7,8 @@ use Closure;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+use Illuminate\Http\Request;
+
 use Auth;
 use App\Lab;
 use App\User;
@@ -22,13 +24,18 @@ class modifyLabPermission
      */
      public function handle($request, Closure $next)
      {
-         $user = Auth::user();
-         $lab = Lab::findOrFail($request->lab);
-         if($user->hasAnyPermission(['lecturer ' . $lab->course_code, 'admin'])){
-           return $next($request);
-         } else {
-            return redirect()->route('lab.show', $lab->id);
-         }
+        $user = Auth::user();
+        if ($request->isMethod('post')) {
+          $lab = Lab::findOrFail($request->lab);
+        } else {
+          $lab = Lab::findOrFail($request->route('id'));
+        }
+
+        if($user->hasAnyPermission(['lecturer ' . $lab->course_code, 'admin'])){
+          return $next($request);
+        } else {
+          return redirect()->route('lab.show', $lab->id);
+        }
 
      }
 }
