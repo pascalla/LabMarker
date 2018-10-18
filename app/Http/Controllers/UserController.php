@@ -63,7 +63,8 @@ class UserController extends Controller
     {
         $user = new User;
         $user->identifier = $request->identifier;
-        $user->name = $request->name;
+        $user->firstname = $request->firstname;
+        $user->surname = $request->surname;
         $user->save();
 
 

@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
               <div class="card mt-5">
-                  <div class="card-header">{{ $user->name }}'s Profile</div>
+                  <div class="card-header">{{ $user->firstname }}'s Profile</div>
                   <div class="card-body">
                     <p>Roles:</p>
                       <ul>

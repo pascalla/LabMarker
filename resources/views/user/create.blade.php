@@ -14,8 +14,12 @@
                       {{ Form::text('identifier', old('identifier'), array('class' => 'form-control')) }}
                     </div>
                     <div class="form-group">
-                      {{ Form::label('name', 'Name:') }}
-                      {{ Form::text('name', old('name'), array('class' => 'form-control')) }}
+                      {{ Form::label('firstname', 'First Name:') }}
+                      {{ Form::text('firstname', old('firstname'), array('class' => 'form-control')) }}
+                    </div>
+                    <div class="form-group">
+                      {{ Form::label('surname', 'Surname') }}
+                      {{ Form::text('surname', old('surname'), array('class' => 'form-control')) }}
                     </div>
                     <div class="form-group">
                       {{ Form::label('role', 'Role:') }}

@@ -13,13 +13,17 @@
                   <div class="card-body">
                     <table class="table table-sm">
                       <tr>
-                        <th>Name</th>
-                        <th>Roles</th>
+                        <th>Student Identifier</th>
+                        <th>First Name</th>
+                        <th>Surname</th>
+                        <th>Actions</th>
                       </tr>
                       @foreach($role_users as $user)
                       <tr>
-                        <td><a href="{{ route('user.show', $user->id)}}">{{ $user->name }}</a></td>
-                        <td>Options</td>
+                        <td><a href="{{ route('user.show', $user->id)}}">{{ $user->identifier }}</a></td>
+                        <td>{{ $user->firstname }}</td>
+                        <td>{{ $user->surname }}</td>
+                        <td></td>
                       </tr>
                       @endforeach
                     </table>
