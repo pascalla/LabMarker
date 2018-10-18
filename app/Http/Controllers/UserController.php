@@ -72,6 +72,7 @@ class UserController extends Controller
         switch($request->role){
           case 'Student':
             $user->assignRole('student');
+            break;
           case 'Marker':
             $user->assignRole('marker');
             break;
@@ -89,7 +90,7 @@ class UserController extends Controller
             break;
         }
 
-        Session::flash('success', 'You have created the user account \'' . $user->name . '\'');
+        Session::flash('success', 'You have created the user account \'' . $user->firstname . '\'');
 
         return redirect()->route('user.create');
     }
