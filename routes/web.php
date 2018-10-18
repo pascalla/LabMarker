@@ -38,7 +38,9 @@ Route::post('/user/store', 'UserController@store')->name('user.store')->middlewa
 Route::get('/lab/create', 'LabController@create')->name('lab.create')->middleware('permission:create labs');
 Route::get('/labs', 'LabController@index')->name('lab.index');
 Route::get('/lab/{id}', 'LabController@show')->name('lab.show')->middleware('checkLabPermission');
+Route::get('/lab/{id}/modify', 'LabController@showModify')->name('lab.modify')->middleware('checkLabPermission');
 Route::post('/lab/store', 'LabController@store')->name('lab.store')->middleware('permission:create labs');
+
 
 // Marker Misc Route
 Route::post('/marker/add', 'MarkerController@assignLabMarker')->name('marker.add')->middleware('modifyLabPermission');
