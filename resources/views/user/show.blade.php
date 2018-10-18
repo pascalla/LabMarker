@@ -21,6 +21,17 @@
                     </ul>
                   </div>
               </div>
+              <div class="card mt-5">
+                  <div class="card-header">{{ $user->firstname }}'s Profile</div>
+                  <div class="card-body">
+                    <p>Enrolled Labs:</p>
+                    <ul>
+                      @foreach($user->enrolledLabs()->get() as $lab)
+                        <li>{{ $lab->course_code }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+              </div>
         </div>
     </div>
 </div>

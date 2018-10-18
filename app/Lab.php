@@ -19,8 +19,12 @@ class Lab extends Model
   ];
 
   // Get list of Enrolled students in Lab
-  public function  enrolledStudents(){
+  public function enrolledStudents(){
     return $this->belongsToMany('App\User', 'enrollments')->orderBy('surname')->orderBy('firstname')->orderBy('identifier');
   }
 
+  // get list of tasks for the lab
+  public function currentTasks(){
+    return $this->belongsToMany('App\Task', 'tasks')->orderBy('id');
+  }
 }

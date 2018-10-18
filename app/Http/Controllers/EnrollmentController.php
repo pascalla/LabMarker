@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 
 use App\Student;
 use App\Enrollment;
+use App\Lab;
+use App\User;
 
 class EnrollmentController extends Controller
 {
@@ -35,9 +38,14 @@ class EnrollmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $lab = Lab::findOrFail($id);
+        $students = User::role('student')->get();
+        foreach($students as $student){
+          $dropdown[$student->identifier] = $student->getDropDownName();
+        }
+        return view('enrollments.create')->with('students', $dropdown)->with('lab', $lab);
     }
 
     /**
@@ -46,15 +54,38 @@ class EnrollmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
+        $lab = Lab::findOrFail($id);
+        $enrollments = 0;
+        $studentsIdentifier = $request->input()["students"];
 
-        $enrollment = new Enrollment;
-        $enrollment->identifier = $request->user_identifier;
-        $enrollment->lab_id = $request->lab;
-        $enrollment->save();
 
-        return redirect()->route('lab.show', $request->lab);
+        foreach($studentsIdentifier as $studentIdentifier){
+          $student = User::where('identifier', $studentIdentifier)->first();
+          $errors[] = array();
+
+          if(!$student){
+            $errors[] = "Could not find student " . $studentIdentifier;
+            continue;
+          }
+
+          if($student->isEnrolled($lab)) {
+            $errors[] = $studentIdentifier ." is already enrolled in this lab.";
+            continue;
+          }
+
+          $enrollment = new Enrollment;
+          $enrollment->user_id = $student->id;
+          $enrollment->lab_id = $lab->id;
+          $enrollment->save();
+          $enrollments++;
+        }
+
+        if($enrollments > 0){
+          Session::flash('success', 'You have enrolled ' . $enrollments . ' with ' . count($errors) . ' error(s).');
+        }
+        return redirect()->route('enrollments.create', $lab->id)->withErrors($errors);
     }
 
     /**

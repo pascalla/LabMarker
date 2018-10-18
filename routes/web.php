@@ -43,6 +43,7 @@ Route::get('/lab/{id}/edit', 'LabController@edit')->name('lab.edit')->middleware
 Route::get('/lab/{id}/progress', 'LabController@progress')->name('lab.progress')->middleware('modifyLabPermission');
 Route::get('/lab/{id}/groups', 'LabController@groups')->name('lab.groups')->middleware('modifyLabPermission');
 Route::get('/lab/{id}/enroll', 'LabController@enroll')->name('lab.enroll')->middleware('modifyLabPermission');
+Route::get('/lab/{id}/enroll/create', 'EnrollmentController@create')->name('enrollments.create')->middleware('modifyLabPermission');
 Route::get('/lab/{id}/tasks', 'LabController@tasks')->name('lab.tasks')->middleware('modifyLabPermission');
 Route::post('/lab/store', 'LabController@store')->name('lab.store')->middleware('permission:create labs');
 
@@ -58,4 +59,4 @@ Route::delete('/task/{id}', 'TaskController@destroy')->name('task.destroy')->mid
 Route::post('/taskprogress/store', 'TaskProgressController@store')->name('taskprogress.store')->middleware('modifyLabPermission');
 
 // Enrollment Routes
-Route::post('/enrollment/store', 'EnrollmentController@store')->name('enrollment.store')->middleware('modifyLabPermission');
+Route::post('/lab/{id}/enroll/store', 'EnrollmentController@store')->name('enrollment.store')->middleware('modifyLabPermission');

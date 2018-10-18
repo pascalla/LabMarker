@@ -32,4 +32,16 @@ class User extends Authenticatable
     protected $hidden = [
         'remember_token',
     ];
+
+    public function getDropDownName(){
+      return $this->surname . ', ' . $this->firstname . ' (' . $this->identifier . ')';
+    }
+
+    public function enrolledLabs(){
+      return $this->belongsToMany('App\Lab', 'enrollments');
+    }
+
+    public function isEnrolled($lab){
+      return $this->enrolledLabs()->get()->contains($lab);
+    }
 }
