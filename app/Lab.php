@@ -18,4 +18,9 @@ class Lab extends Model
       'lecturer_id', 'course_code',
   ];
 
+  // Get list of Enrolled students in Lab
+  public function  enrolledStudents(){
+    return $this->belongsToMany('App\User', 'enrollments')->orderBy('surname')->orderBy('firstname')->orderBy('identifier');
+  }
+
 }
