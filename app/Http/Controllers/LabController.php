@@ -53,6 +53,10 @@ class LabController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+          'course_code' => 'required|unique:labs',
+        ]);
+
         $user = Auth::user();
 
         $lab = new Lab;
@@ -105,7 +109,8 @@ class LabController extends Controller
      */
     public function edit($id)
     {
-        return view('lab.edit');
+        $lab = Lab::findOrFail($id);
+        return view('lab.edit')->with('lab', $lab);
     }
 
     public function tasks($id)
@@ -141,7 +146,15 @@ class LabController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+          'course_code' => 'required|unique:labs',
+        ]);
+        
+        $lab = Lab::findOrFail($id);
+        $lab->course_code = $request->course_code;
+        $lab->save();
+
+        return redirect()->route('lab.edit', $lab->id);
     }
 
     /**

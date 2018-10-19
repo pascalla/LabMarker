@@ -56,6 +56,11 @@ class EnrollmentController extends Controller
      */
     public function store(Request $request, $id)
     {
+
+        $request->validate([
+          'students' => 'required',
+        ]);
+
         $lab = Lab::findOrFail($id);
         $enrollments = 0;
         $studentsIdentifier = $request->input()["students"];

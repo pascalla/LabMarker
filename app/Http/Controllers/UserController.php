@@ -61,6 +61,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+          'identifier' => 'required|unique:users',
+          'firstname' => 'required',
+          'surname' => 'required',
+        ]);
+
         $user = new User;
         $user->identifier = $request->identifier;
         $user->firstname = $request->firstname;
