@@ -18,14 +18,14 @@ class SystemAdminSeeder extends Seeder
       $user = new User;
       $user->identifier = "921340";
       $user->firstname = "Joshua";
-      $user->lastname = "Blackman";
+      $user->surname = "Blackman";
       $user->save();
       $user->assignRole('admin');
 
       $user = new User;
       $user->identifier = "s.w.powell";
       $user->firstname = "Stewart";
-      $user->surname = "Powell"
+      $user->surname = "Powell";
       $user->save();
       $user->assignRole('admin');
     }
