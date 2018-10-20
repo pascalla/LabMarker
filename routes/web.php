@@ -37,14 +37,15 @@ Route::post('/user/store', 'UserController@store')->name('user.store')->middlewa
 // Lab Routes
 Route::get('/lab/create', 'LabController@create')->name('lab.create')->middleware('permission:create labs');
 Route::get('/labs', 'LabController@index')->name('lab.index');
-Route::get('/lab/{id}', 'LabController@show')->name('lab.show')->middleware('checkLabPermission');
-Route::get('/lab/{id}/modify', 'LabController@modify')->name('lab.modify')->middleware('modifyLabPermission');
-Route::get('/lab/{id}/edit', 'LabController@edit')->name('lab.edit')->middleware('modifyLabPermission');
-Route::get('/lab/{id}/progress', 'LabController@progress')->name('lab.progress')->middleware('modifyLabPermission');
-Route::get('/lab/{id}/groups', 'LabController@groups')->name('lab.groups')->middleware('modifyLabPermission');
-Route::get('/lab/{id}/enroll', 'LabController@enroll')->name('lab.enroll')->middleware('modifyLabPermission');
-Route::get('/lab/{id}/enroll/create', 'EnrollmentController@create')->name('enrollments.create')->middleware('modifyLabPermission');
-Route::get('/lab/{id}/tasks', 'LabController@tasks')->name('lab.tasks')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}', 'LabController@show')->name('lab.show')->middleware('checkLabPermission');
+Route::get('/lab/{lab_id}/modify', 'LabController@modify')->name('lab.modify')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/edit', 'LabController@edit')->name('lab.edit')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/progress', 'LabController@progress')->name('lab.progress')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/groups', 'LabController@groups')->name('lab.groups')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/enroll', 'LabController@enroll')->name('lab.enroll')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/enroll/create', 'EnrollmentController@create')->name('enrollments.create')->middleware('modifyLabPermission');
+//Route::get('/lab/{id}/tasks', 'LabController@tasks')->name('lab.tasks')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/update', 'LabController@update')->name('lab.update')->middleware('modifyLabPermission');
 Route::post('/lab/store', 'LabController@store')->name('lab.store')->middleware('permission:create labs');
 
 
@@ -52,11 +53,17 @@ Route::post('/lab/store', 'LabController@store')->name('lab.store')->middleware(
 Route::post('/marker/add', 'MarkerController@assignLabMarker')->name('marker.add')->middleware('modifyLabPermission');
 
 // Task Routes
-Route::post('/task/store', 'TaskController@store')->name('task.store')->middleware('modifyLabPermission');
-Route::delete('/task/{id}', 'TaskController@destroy')->name('task.destroy')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/tasks', 'TaskController@index')->name('task.index')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/tasks/create', 'TaskController@create')->name('task.create')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/task/{task_id}/edit', 'TaskController@edit')->name('task.edit')->middleware('modifyLabPermission');
+Route::post('/lab/{lab_id}/task/store', 'TaskController@store')->name('task.store')->middleware('modifyLabPermission');
+Route::post('/lab/{lab_id}/task/{task_id}/update', 'TaskController@update')->name('task.update')->middleware('modifyLabPermission');
+Route::delete('/lab/{lab_id}/task/{task_id}', 'TaskController@destroy')->name('task.destroy')->middleware('modifyLabPermission');
+
 
 // Task Progress Routes
 Route::post('/taskprogress/store', 'TaskProgressController@store')->name('taskprogress.store')->middleware('modifyLabPermission');
 
 // Enrollment Routes
-Route::post('/lab/{id}/enroll/store', 'EnrollmentController@store')->name('enrollment.store')->middleware('modifyLabPermission');
+Route::post('/lab/{lab_id}/enroll/store', 'EnrollmentController@store')->name('enrollment.store')->middleware('modifyLabPermission');
+Route::delete('/enrollments', 'EnrollmentController@destroy')->name('enrollment.destroy')->middleware('modifyLabPermission');

@@ -133,8 +133,22 @@ class EnrollmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+
+
+        $lab_id = $request->lab;
+        $user_id = $request->student;
+
+        $enrollment = Enrollment::where([
+          ['lab_id', '=', $lab_id],
+          ['user_id', '=', $user_id],
+        ])->first();
+
+        $enrollment->delete();
+
+        Session::flash('success', 'Student has been unenrolled');
+
+        return redirect()->route('lab.enroll', $lab_id);
     }
 }

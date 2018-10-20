@@ -24,11 +24,14 @@ class modifyLabPermission
      */
      public function handle($request, Closure $next)
      {
+
         $user = Auth::user();
-        if ($request->isMethod('post')) {
+
+        if ($request->isMethod('post') || $request->isMethod('delete')) {
+          
           $lab = Lab::findOrFail($request->lab);
         } else {
-          $lab = Lab::findOrFail($request->route('id'));
+          $lab = Lab::findOrFail($request->route('lab_id'));
         }
 
         if($user->hasAnyPermission(['lecturer ' . $lab->course_code, 'admin'])){

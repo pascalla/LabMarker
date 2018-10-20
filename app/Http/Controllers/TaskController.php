@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Carbon\Carbon;
+
 use App\Task;
+use App\Lab;
+
+use Session;
 
 class TaskController extends Controller
 {
@@ -24,9 +29,11 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+      $lab = Lab::findOrFail($id);
+      $tasks = Task::all();
+      return view('tasks.index')->with('lab', $lab)->with('tasks', $tasks);
     }
 
     /**
@@ -34,9 +41,10 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-
+      $lab = Lab::findOrFail($id);
+      return view('tasks.create')->with('lab', $lab);
     }
 
     /**
@@ -47,12 +55,32 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = new Task;
-        $task->lab_id = $request->lab;
-        $task->name = $request->task_name;
-        $task->save();
+      $request->validate([
+        'lab' => 'required',
+        'name' => 'required',
+        'marks' => 'required|numeric'
+      ]);
 
-        return redirect()->route('lab.show', $request->lab);
+      $task = new Task;
+      $task->lab_id = $request->lab;
+      $task->name = $request->name;
+      $task->marks = $request->marks;
+
+      if(isset($request->half)){
+        $date = new Carbon($request->half_marks_date);
+        $date = $date->toDateTimeString();
+        $task->half_marks = $date;
+      }
+
+      if(isset($request->full)){
+        $date = new Carbon($request->full_expiry_date);
+        $date = $date->toDateTimeString();
+        $task->full_marks = $date;
+      }
+
+      $task->save();
+
+      return redirect()->route('task.index', $request->lab);
     }
 
     /**
@@ -72,9 +100,11 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($lab_id, $task_id)
     {
-        //
+        $task = Task::findOrFail($task_id);
+        $lab = Lab::findOrFail($lab_id);
+        return view('tasks.edit')->with('task', $task)->with('lab', $lab);
     }
 
     /**
@@ -84,9 +114,37 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+      $task = Task::findOrFail($request->task_id);
+      $lab = Lab::findOrFail($request->lab);
+
+      $request->validate([
+        'lab' => 'required',
+        'name' => 'required',
+        'marks' => 'required|numeric'
+      ]);
+
+      $task->lab_id = $request->lab;
+      $task->name = $request->name;
+      $task->marks = $request->marks;
+
+      if(isset($request->half)){
+        $date = new Carbon($request->half_marks_date);
+        $date = $date->toDateTimeString();
+        $task->half_marks = $date;
+      }
+
+      if(isset($request->full)){
+        $date = new Carbon($request->full_expiry_date);
+        $date = $date->toDateTimeString();
+        $task->full_marks = $date;
+      }
+
+      $task->save();
+
+      Session::flash('success', 'Task has been updated.');
+      return redirect()->route('task.edit', [$task->lab_id, $task->id]);
     }
 
     /**
@@ -95,11 +153,13 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($lab_id, $task_id)
     {
-        $task = Task::findOrFail($id);
+        $task = Task::findOrFail($task_id);
         $task->delete();
 
-        return redirect()->route('lab.show', $request->lab_id);
+        Session::flash('success', 'Task has been deleted.');
+
+        return redirect()->route('task.index', $task->lab_id);
     }
 }

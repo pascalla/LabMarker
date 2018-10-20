@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+      <li class="breadcrumb-item active">Create Lab</li>
+    </ol>
+  </nav>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -12,6 +18,10 @@
                     <div class="form-group">
                     {{ Form::label('course_code', 'Course Code:')}}
                     {{ Form::text('course_code', old('course_code'), array('class' => 'form-control')) }}
+                    </div>
+                    <div class="form-group">
+                    {{ Form::label('year', 'Year:')}}
+                    {{ Form::text('year', old('year'), array('class' => 'form-control')) }}
                     </div>
                     <div class="form-group">
                       {{ Form::submit('Create', array('class' => 'btn  btn-primary btn-block'))}}

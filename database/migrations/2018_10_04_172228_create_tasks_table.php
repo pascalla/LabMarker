@@ -17,7 +17,9 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->integer('lab_id');
             $table->string('name');
-            // Expiry Date?
+            $table->integer('marks');
+            $table->date('half_marks')->nullable();
+            $table->date('full_marks')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

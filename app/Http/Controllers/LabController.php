@@ -55,6 +55,7 @@ class LabController extends Controller
     {
         $request->validate([
           'course_code' => 'required|unique:labs',
+          'year' => 'required|numeric',
         ]);
 
         $user = Auth::user();
@@ -62,6 +63,7 @@ class LabController extends Controller
         $lab = new Lab;
         $lab->course_code = $request->course_code;
         $lab->lecturer_id = $user->id;
+        $lab->year = $request->year;
         $lab->save();
 
 
@@ -83,7 +85,7 @@ class LabController extends Controller
 
         $tasks = Task::where('lab_id', $lab->id)->get();
 
-        $students = $lab->enrolledStudents()->get();
+        $students = $lab->enrolledStudents()->where('enrollments.deleted_at', null)->get();
 
         return view('lab.show')->with('lab', $lab)->with('markers', $markers)->with('tasks', $tasks)->with('students', $students);
     }
@@ -113,15 +115,10 @@ class LabController extends Controller
         return view('lab.edit')->with('lab', $lab);
     }
 
-    public function tasks($id)
-    {
-      return view('lab.tasks');
-    }
-
     public function enroll($id)
     {
       $lab = Lab::findOrFail($id);
-      $students = $lab->enrolledStudents()->get();
+      $students = $lab->enrolledStudents()->where('enrollments.deleted_at', null)->get();
       return view('lab.enroll')->with('students', $students)->with('lab', $lab);
     }
 
@@ -149,7 +146,7 @@ class LabController extends Controller
         $request->validate([
           'course_code' => 'required|unique:labs',
         ]);
-        
+
         $lab = Lab::findOrFail($id);
         $lab->course_code = $request->course_code;
         $lab->save();

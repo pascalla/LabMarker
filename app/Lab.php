@@ -15,7 +15,7 @@ class Lab extends Model
    * @var array
    */
   protected $fillable = [
-      'lecturer_id', 'course_code',
+      'lecturer_id', 'course_code', 'year'
   ];
 
   // Get list of Enrolled students in Lab

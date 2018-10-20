@@ -6,6 +6,14 @@
 
 @section('content')
 <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('lab.modify', $lab->id) }}">{{ $lab->course_code }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Enrollments</li>
+      </ol>
+    </nav>
+
     <div class="row justify-content-center">
         <div class="col-md-12">
           <div class="card">
@@ -24,7 +32,13 @@
                     <td>{{ $student->identifier }}</td>
                     <td>{{ $student->surname }}</td>
                     <td>{{ $student->firstname}}</td>
-                    <td><button class="btn btn-danger">Disenroll</button></td>
+                    <td>
+                      {{ Form::open(['route' => ['enrollment.destroy'], 'method' => 'DELETE', 'class' => 'form-delete']) }}
+                        {{ Form::hidden('lab', $lab->id) }}
+                        {{ Form::hidden('student', $student->id) }}
+                        {{Form::submit('Disenroll', ['class' => 'btn btn-danger']) }}
+                      {{ Form::close() }}
+                    </td>
                   </tr>
                 @endforeach
               </table>
@@ -33,7 +47,19 @@
         </div>
     </div>
 </div>
+
+@include('partials._delete')
 @endsection
 
 @section('scripts')
+<script>
+$('.form-delete').on('click', function(e){
+    e.preventDefault();
+    var form = $(this);
+    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+        .on('click', '#delete-btn', function(){
+            form.submit();
+        });
+});
+</script>
 @endsection
