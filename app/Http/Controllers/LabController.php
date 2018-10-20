@@ -67,7 +67,7 @@ class LabController extends Controller
         $lab->save();
 
 
-        return redirect()->route('lab.show', $lab->id);
+        return redirect()->route('lab.modify', $lab->id);
     }
 
     /**
