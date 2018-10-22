@@ -6,6 +6,7 @@ use Illuminate\Auth\EloquentUserProvider as UserProvider;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
 use App\User;
+use App;
 
 use XPathSelector\Selector;
 use XPathSelector\Exception\NodeNotFoundException;
@@ -24,6 +25,13 @@ class COSIUserProvider extends UserProvider {
 
     public function validateCredentials(UserContract $user, array $credentials)
     {
+        // If local development, skip authentication
+        $environment = App::environment();
+
+        if(App::environment('local') || App::environment('development')){
+            return true;
+        }
+
         $csrf = "";
         $loggedIn = false;
 
