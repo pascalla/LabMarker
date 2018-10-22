@@ -7,10 +7,18 @@
 
 @section('content')
 <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('lab.modify', $lab->id) }}">{{ $lab->course_code }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('task.index', $lab->id) }}">Lab Tasks</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Task</li>
+      </ol>
+    </nav>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Create Task</div>
+                <div class="card-header">Edit Task</div>
 
                 <div class="card-body">
                   {{ Form::open(['route' => ['task.update', $lab->id, $task->id]]) }}
