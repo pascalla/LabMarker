@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('style')
+  <link href="{{ asset('css/foundation-datepicker.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('css/foundation-icons.css') }}" rel="stylesheet" />
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -18,30 +23,49 @@
                       {{ Form::text('marks', $task->marks, array('class' => 'form-control')) }}
                     </div>
                     <div class="form-group">
-                      {{ Form::checkbox('full', 'value', false) }}
+                      {{ Form::checkbox('full', 'true', isset($task->full_marks), array('id' => 'full')) }}
                       {{ Form::label('full', 'Full Marks Deadline Enabled:', array('class' => 'form-check-label')) }}
                     </div>
                     <div class="form-group">
-                      {{ Form::label('expiry_date', 'Expiry Date:')}}
-                      {{ Form::text('expiry_date', old('expiry_date'), array('class' => 'form-control')) }}
+                      {{ Form::label('full_expiry_date', 'Expiry Date:')}}
+                      {{ Form::text('full_expiry_date', $task->full_marks, array('id' => 'full_marks_date', 'class' => 'form-control', 'disabled' => isset($task->full_marks) ? false : true)) }}
                     </div>
                     <div class="form-group">
-                      {{ Form::checkbox('half', 'value', false) }}
+                      {{ Form::checkbox('half', 'true', isset($task->half_marks), array('id' => 'half')) }}
                       {{ Form::label('half', 'Half Marks Deadline Enabled:', array('class' => 'form-check-label')) }}
                     </div>
                     <div class="form-group">
                       {{ Form::label('half_expiry_date', 'Half Expiry Date:')}}
-                      {{ Form::text('half_expiry_date', old('half_expiry_date'), array('class' => 'form-control')) }}
+                      {{ Form::text('half_expiry_date', $task->half_marks, array('id' => 'half_marks_date', 'class' => 'form-control', 'disabled' => isset($task->half_marks) ? false : true)) }}
                     </div>
                     <div class="form-group">
                       {{ Form::hidden('task_id', $task->id) }}
                       {{ Form::hidden('lab', $lab->id) }}
                       {{ Form::submit('Update', array('class' => 'btn  btn-primary btn-block'))}}
                     </div>
-                  {{ Form::close() }}
-                </div>
+                {{ Form::close() }}
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script src="{{ asset('js/foundation-datepicker.min.js') }}"></script>
+<script>
+  $('#full_marks_date').fdatepicker({
+    format: 'dd-mm-yyyy',
+  });
+  $('#half_marks_date').fdatepicker({
+    format: 'dd-mm-yyyy'
+  });
+
+  $('#full').change(function() {
+  	$('#full_marks_date').prop('disabled', function(i, v) { return !v; });
+  });
+
+  $('#half').change(function() {
+  	$('#half_marks_date').prop('disabled', function(i, v) { return !v; });
+  });
+</script>
 @endsection
