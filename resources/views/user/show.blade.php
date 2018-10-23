@@ -33,7 +33,7 @@
                   <div class="card-body">
                     <p>Enrolled Labs:</p>
                     <ul>
-                      @foreach($user->enrolledLabs()->get() as $lab)
+                      @foreach($user->enrolledLabs()->where('enrollments.deleted_at', null)->get() as $lab)
                         <li>{{ $lab->course_code }}</li>
                       @endforeach
                     </ul>

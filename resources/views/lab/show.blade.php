@@ -25,7 +25,7 @@
                     <label for="student_number">Search Students</label>
                     <select type="select" id="student" name="student" class="input-students form-control">
                       @foreach($students as $student)
-                        <option value="{{ $student->id }}" data-url="{{ route('user.show', $student->id) }}">{{ $student->firstname }} {{ $student->surname }} ({{ $student->identifier }})</option>
+                        <option value="{{ $student->id }}" data-url="{{ route('user.showStudent', [$lab->id, $student->id]) }}">{{ $student->firstname }} {{ $student->surname }} ({{ $student->identifier }})</option>
                       @endforeach
                     </select>
                     </div>

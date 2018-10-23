@@ -24,7 +24,7 @@ class Lab extends Model
   }
 
   // get list of tasks for the lab
-  public function currentTasks(){
-    return $this->belongsToMany('App\Task', 'tasks')->orderBy('id');
+  public function getTasks(){
+    return $this->hasMany('App\Task');
   }
 }

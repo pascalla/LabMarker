@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @if(!auth()->user()->hasRole('student'))
+            @if(auth()->user()->hasRole('marker') || auth()->user()->hasRole('lecturer') || auth()->user()->hasRole('admin') || auth()->user()->hasRole('overseer'))
             <div class="card">
                 <div class="card-header">Dashboard</div>
                 <div class="card-body">

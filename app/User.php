@@ -47,4 +47,13 @@ class User extends Authenticatable
     public function isEnrolled($lab){
       return $this->enrolledLabs()->where('deleted_at', null)->get()->contains($lab);
     }
+
+    public function getTaskProgress($task){
+      return $this->hasMany('App\TaskProgress')->where('task_id', $task->id)->get();
+    }
+
+    public function checkTaskProgress($task){
+      //return $this->belongsToMany('App\TaskProgress', 'tasks_progress')->pluck('tasks_progress.task_id')->contains($task->id);
+      return $this->hasMany('App\TaskProgress')->where('task_id', $task->id)->pluck('tasks_progress.task_id')->contains($task->id);
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\TaskProgress;
+use Validator;
 
 class TaskProgressController extends Controller
 {
@@ -47,14 +48,28 @@ class TaskProgressController extends Controller
      */
     public function store(Request $request)
     {
+      $validator = Validator::make($request->all(), [
+        'user_id' => 'required',
+        'task_id' => 'required',
+        'lab' => 'required',
+        'status' => 'status'
+      ]);
+
+      if ($validator->fails()) {
+        $errors = $validator->errors();
+        return $errors->toJson();
+      } else {
         $taskProgress = new TaskProgress;
-        $taskProgress->identifier = $request->student_id;
+        $taskProgress->user_id= $request->user_id;
         $taskProgress->task_id = $request->task_id;
         $taskProgress->lab_id = $request->lab;
         $taskProgress->status = 1;
         $taskProgress->save();
 
-        return redirect()->route('student.show', $request->student_id);
+        return response(['status' => 'success']);
+      }
+
+
     }
 
     /**

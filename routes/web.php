@@ -34,6 +34,8 @@ Route::get('/users', 'UserController@index')->name('user.index')->middleware('pe
 Route::get('/user/{id}', 'UserController@show')->name('user.show')->middleware('permission:admin');
 Route::post('/user/store', 'UserController@store')->name('user.store')->middleware('permission:admin');
 
+Route::get('/lab/{lab_id}/user/{user_id}', 'UserController@showStudent')->name('user.showStudent')->middleware('checkLabPermission');
+
 // Lab Routes
 Route::get('/lab/create', 'LabController@create')->name('lab.create')->middleware('permission:create labs');
 Route::get('/labs', 'LabController@index')->name('lab.index');

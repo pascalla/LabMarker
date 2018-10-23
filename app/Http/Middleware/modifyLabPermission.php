@@ -28,7 +28,6 @@ class modifyLabPermission
         $user = Auth::user();
 
         if ($request->isMethod('post') || $request->isMethod('delete')) {
-          
           $lab = Lab::findOrFail($request->lab);
         } else {
           $lab = Lab::findOrFail($request->route('lab_id'));
@@ -37,7 +36,11 @@ class modifyLabPermission
         if($user->hasAnyPermission(['lecturer ' . $lab->course_code, 'admin'])){
           return $next($request);
         } else {
-          return redirect()->route('lab.show', $lab->id);
+          if($user->hasRole('student')){
+            return redirect()->route('home');
+          } else {
+            return redirect()->route('lab.show', $lab->id);
+          }
         }
 
      }
