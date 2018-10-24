@@ -45,7 +45,7 @@ class User extends Authenticatable
 
     // Check if user is enrolled in in lab.
     public function isEnrolled($lab){
-      return $this->enrolledLabs()->where('deleted_at', null)->get()->contains($lab);
+      return $this->enrolledLabs()->where('enrollments.deleted_at', null)->get()->contains($lab);
     }
 
     public function getTaskProgress($task){
