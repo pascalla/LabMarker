@@ -59,6 +59,8 @@ class TaskProgressController extends Controller
         $errors = $validator->errors();
         return $errors->toJson();
       } else {
+
+
         $taskProgress = new TaskProgress;
         $taskProgress->user_id= $request->user_id;
         $taskProgress->task_id = $request->task_id;

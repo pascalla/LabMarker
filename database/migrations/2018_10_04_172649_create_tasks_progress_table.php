@@ -19,6 +19,7 @@ class CreateTasksProgressTable extends Migration
             $table->integer('lab_id');
             $table->integer('task_id');
             $table->boolean('status');
+            $table->integer('marks');
             $table->timestamps();
             $table->softDeletes();
         });
