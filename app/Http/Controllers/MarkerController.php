@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+use Session;
+
 use App\User;
 use App\Auth;
+use App\Lab;
 
 class MarkerController extends Controller
 {
@@ -28,19 +31,26 @@ class MarkerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($lab_id)
     {
-        //
+        $lab = Lab::findOrFail($lab_id);
+        $markers = User::role('marker')->get();
+        return view('marker.index')->with('lab', $lab)->with('markers', $markers);
     }
 
     /**
      * Show the form for creating a new resource.
-     *
+     *User::role($role)->get();
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($lab_id)
     {
-        //
+        $lab = Lab::findOrFail($lab_id);
+        $students = User::role('student')->get();
+        foreach($students as $student){
+          $dropdown[$student->identifier] = $student->getDropDownName();
+        }
+        return view('marker.create')->with('lab', $lab)->with('students', $dropdown);
     }
 
     /**
@@ -51,7 +61,18 @@ class MarkerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $lab = Lab::findOrFail($request->lab);
+      $studentsIdentifier = $request->input()["students"];
+
+      foreach($studentsIdentifier as $studentIdentifier){
+        $student = User::where('identifier', $studentIdentifier)->first();
+        $student->assignRole('marker');
+        $student->givePermissionTo('marker ' . $lab->course_code);
+      }
+
+      Session::flash('success', 'Successfully added markers');
+
+      return redirect()->route('marker.create', $request->lab);
     }
 
     /**
@@ -74,8 +95,8 @@ class MarkerController extends Controller
     public function edit($id)
     {
         //
-    }
 
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -101,10 +122,6 @@ class MarkerController extends Controller
 
 
     public function assignLabMarker(Request $request){
-      $marker = User::findOrFail($request->marker_id);
-      $marker->assignRole('marker');
-      $marker->givePermissionTo('marker ' . $request->course_code);
-      //return redirect()->route('lab.show', ['id' => $request->lab_id]);
-      return redirect()->route('lab.show', $request->lab);
+
     }
 }

@@ -52,7 +52,9 @@ Route::post('/lab/store', 'LabController@store')->name('lab.store')->middleware(
 
 
 // Marker Misc Route
-Route::post('/marker/add', 'MarkerController@assignLabMarker')->name('marker.add')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/marker', 'MarkerController@index')->name('marker.index')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/marker/create', 'MarkerController@create')->name('marker.create')->middleware('modifyLabPermission');
+Route::post('/lab/{lab_id}/marker/store', 'MarkerController@store')->name('marker.store')->middleware('modifyLabPermission');
 
 // Task Routes
 Route::get('/lab/{lab_id}/tasks', 'TaskController@index')->name('task.index')->middleware('modifyLabPermission');
@@ -64,7 +66,7 @@ Route::delete('/lab/{lab_id}/task/{task_id}', 'TaskController@destroy')->name('t
 
 
 // Task Progress Routes
-Route::post('/taskprogress/store', 'TaskProgressController@store')->name('taskprogress.store')->middleware('modifyLabPermission');
+Route::post('/taskprogress/store', 'TaskProgressController@store')->name('taskprogress.store')->middleware('checkLabPermission');
 
 // Enrollment Routes
 Route::post('/lab/{lab_id}/enroll/store', 'EnrollmentController@store')->name('enrollment.store')->middleware('modifyLabPermission');
