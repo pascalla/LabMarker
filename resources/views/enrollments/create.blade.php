@@ -10,7 +10,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
       <li class="breadcrumb-item"><a href="{{ route('lab.modify', $lab->id) }}">{{ $lab->course_code }}</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('lab.enroll', $lab->id) }}">Enrollments</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('enrollment.index', $lab->id) }}">Enrollments</a></li>
       <li class="breadcrumb-item active" aria-current="page">Enrol Students</li>
     </ol>
   </nav>

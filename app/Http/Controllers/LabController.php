@@ -115,13 +115,6 @@ class LabController extends Controller
         return view('lab.edit')->with('lab', $lab);
     }
 
-    public function enroll($id)
-    {
-      $lab = Lab::findOrFail($id);
-      $students = $lab->enrolledStudents()->where('enrollments.deleted_at', null)->get();
-      return view('lab.enroll')->with('students', $students)->with('lab', $lab);
-    }
-
     public function groups($id)
     {
       return view('lab.groups');

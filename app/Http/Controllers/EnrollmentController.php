@@ -28,9 +28,11 @@ class EnrollmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+      $lab = Lab::findOrFail($id);
+      $students = $lab->enrolledStudents()->where('enrollments.deleted_at', null)->get();
+      return view('enrollments.index')->with('students', $students)->with('lab', $lab);
     }
 
     /**
@@ -149,6 +151,6 @@ class EnrollmentController extends Controller
 
         Session::flash('success', 'Student has been unenrolled');
 
-        return redirect()->route('lab.enroll', $lab_id);
+        return redirect()->route('enrollment.index', $lab_id);
     }
 }
