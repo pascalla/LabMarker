@@ -55,7 +55,7 @@ class LabController extends Controller
     {
         $request->validate([
           'course_code' => 'required|unique:labs',
-          'year' => 'required|numeric',
+          'year' => 'required',
         ]);
 
         $user = Auth::user();
