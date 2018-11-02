@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 use App\Lab;
 use App\Observers\LabObserver;
@@ -17,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Lab::observe(LabObserver::class);
+        Schema::defaultStringLength(191);
     }
 
     /**
