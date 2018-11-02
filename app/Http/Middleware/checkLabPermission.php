@@ -23,7 +23,13 @@ class checkLabPermission
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        $lab = Lab::findOrFail($request->route('lab_id'));
+
+        if ($request->isMethod('post') || $request->isMethod('delete')) {
+          $lab = Lab::findOrFail($request->lab);
+        } else {
+          $lab = Lab::findOrFail($request->route('lab_id'));
+        }
+
         if($user->hasAnyPermission(['marker ' . $lab->course_code, 'admin', 'view labs'])){
           return $next($request);
         } else {
