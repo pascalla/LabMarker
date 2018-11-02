@@ -17,7 +17,7 @@ class CreateLabsTable extends Migration
             $table->increments('id');
             $table->integer('lecturer_id');
             $table->text('course_code');
-            $table->integer('year');
+            $table->text('year');
             $table->timestamps();
             $table->softDeletes();
         });
