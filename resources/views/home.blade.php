@@ -29,6 +29,38 @@
                 </div>
             </div>
             @endif
+
+            @if(auth()->user()->enrolledLabs()->count() > 0)
+              @foreach($studentLabs as $studentLab)
+                <div class="card">
+                  <div class="card-header">{{ $studentLab["lab"]->course_code }}</div>
+                  <div class="card-body">
+                    <table class="table">
+                      <tr>
+                        <th>Task Name</th>
+                        <th>Marks</th>
+                        <th>Action</th>
+                      </tr>
+                      @foreach($studentLab["tasks"] as $key => $task)
+                      <tr>
+                        <td>{{ $task->name }}</td>
+                        <td></td>
+                        <td>
+                          @if($studentLab["progress"]->get($key)->status == 0)
+                            <button class="btn btn-danger">Not Signed Off</button>
+                          @else
+                            <button class="btn btn-success">Signed Off</button>
+                          @endif
+                        </td>
+                      </tr>
+                      @endforeach
+                    </table>
+                  </div>
+                </div>
+              @endforeach
+            @else
+              <h2> Not enrolled in any Labs </h2>
+            @endif
         </div>
     </div>
 </div>
