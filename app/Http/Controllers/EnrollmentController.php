@@ -65,12 +65,12 @@ class EnrollmentController extends Controller
 
         $lab = Lab::findOrFail($id);
         $enrollments = 0;
+        $errors = array();
         $studentsIdentifier = $request->input()["students"];
 
 
         foreach($studentsIdentifier as $studentIdentifier){
           $student = User::where('identifier', $studentIdentifier)->first();
-          $errors[] = array();
 
           if(!$student){
             $errors[] = "Could not find student " . $studentIdentifier;
@@ -90,7 +90,7 @@ class EnrollmentController extends Controller
         }
 
         if($enrollments > 0){
-          Session::flash('success', 'You have enrolled ' . $enrollments . ' with ' . count($errors) . ' error(s).');
+          Session::flash('success', 'You have enrolled ' . $enrollments . ' students with ' . count($errors) . ' error(s).');
         }
         return redirect()->route('enrollments.create', $lab->id)->withErrors($errors);
     }
