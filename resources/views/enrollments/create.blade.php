@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -14,26 +14,29 @@
       <li class="breadcrumb-item active" aria-current="page">Enrol Students</li>
     </ol>
   </nav>
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">{{ $lab->course_code }} - Select Students to enrol</div>
-            <div class="card-body">
-              {{ Form::open(array('url' => route('enrollment.store', $lab->id) )) }}
-                <div class="form-group">
-                {{ Form::label('students', 'Students:')}}
-                {{ Form::select('students[]', $students, null, array('class' => 'form-control', 'multiple' => 'true', 'id' => 'students')) }}
-                </div>
-                <div class="form-group">
-                  {{ Form::hidden('lab', $lab->id) }}
-                  {{ Form::submit('Create', array('class' => 'btn  btn-primary btn-block'))}}
-                </div>
-              {{ Form::close() }}
-                <p>You can use ';', ' ', or ',' to tokenize your selections.</p>
-            </div>
+
+  @include('partials._messages')
+
+  <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">{{ $lab->course_code }} - Select Students to enrol</div>
+          <div class="card-body">
+            {{ Form::open(array('url' => route('enrollment.store', $lab->id) )) }}
+              <div class="form-group">
+              {{ Form::label('students', 'Students:')}}
+              {{ Form::select('students[]', $students, null, array('class' => 'form-control', 'multiple' => 'true', 'id' => 'students')) }}
+              </div>
+              <div class="form-group">
+                {{ Form::hidden('lab', $lab->id) }}
+                {{ Form::submit('Create', array('class' => 'btn  btn-primary btn-block'))}}
+              </div>
+            {{ Form::close() }}
+              <p>You can use ';', ' ', or ',' to tokenize your selections.</p>
           </div>
         </div>
-    </div>
+      </div>
+  </div>
 </div>
 @endsection
 

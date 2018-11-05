@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -13,8 +13,11 @@
         <li class="breadcrumb-item active">{{ $lab->course_code }}</li>
       </ol>
     </nav>
+
+    @include('partials._messages')
+
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <h1>{{ $lab->course_code }}</h1>
             <!-- Marker/Lecturer/Overseer/Admin -->
             @if(auth()->user()->can('marker ' . $lab->course_code) || auth()->user()->can('view ' . $lab->course_code) || auth()->user()->can('view labs'))

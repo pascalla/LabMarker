@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -13,8 +13,11 @@
         <li class="breadcrumb-item active" aria-current="page">Edit {{ $lab->name }}</li>
       </ol>
     </nav>
+
+    @include('partials._messages')
+
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <div class="card">
             <div class="card-header">Update {{ $lab->name }}</div>
             <div class="card-body">
@@ -25,7 +28,7 @@
                 </div>
                 <div class="form-group">
                   {{ Form::label('year', 'Year:')}}
-                  {{ Form::text('year', old('year'), array('class' => 'form-control')) }}
+                  {{ Form::text('year', $lab->year, array('class' => 'form-control')) }}
                 </div>
                 <div class="form-group">
                   {{ Form::submit('Update', array('class' => 'btn  btn-primary btn-block'))}}

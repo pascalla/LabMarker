@@ -1,13 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
         <li class="breadcrumb-item active">Labs</li>
       </ol>
     </nav>
+
+    @include('partials._messages')
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

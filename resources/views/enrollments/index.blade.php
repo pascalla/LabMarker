@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
@@ -14,8 +14,10 @@
       </ol>
     </nav>
 
+    @include('partials._messages')
+
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <div class="card">
             <div class="card-header">{{ $lab->course_code }} - Enrollments ({{ $students->count() }})</div>
             <div class="card-body">
