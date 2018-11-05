@@ -36,11 +36,7 @@ class modifyLabPermission
         if($user->hasAnyPermission(['lecturer ' . $lab->course_code, 'admin'])){
           return $next($request);
         } else {
-          if($user->hasRole('student')){
-            return redirect()->route('home');
-          } else {
-            return redirect()->route('lab.show', $lab->id);
-          }
+          abort('404');
         }
 
      }
