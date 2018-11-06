@@ -20,11 +20,20 @@ class Lab extends Model
 
   // Get list of Enrolled students in Lab
   public function enrolledStudents(){
-    return $this->belongsToMany('App\User', 'enrollments')->orderBy('surname')->orderBy('firstname')->orderBy('identifier');
+    return $this->belongsToMany('App\User', 'enrollments')->where('enrollments.deleted_at', null)->orderBy('surname')->orderBy('firstname')->orderBy('identifier');
   }
 
   // get list of tasks for the lab
   public function getTasks(){
     return $this->hasMany('App\Task');
+  }
+
+  public function getTotalMarks(){
+    $total = 0;
+    foreach($this->getTasks()->get() as $task){
+      $total += $task->marks;
+    }
+
+    return $total;
   }
 }

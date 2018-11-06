@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\TaskProgress;
 use App\Task;
+use App\User;
+use App\Lab;
 use Carbon;
 use Validator;
 
@@ -27,9 +29,41 @@ class TaskProgressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($lab_id)
     {
-        return view('taskprogress.index');
+        $lab = Lab::findOrFail($lab_id);
+        $tasks = $lab->getTasks()->get();
+        $totalMarks = $lab->getTotalMarks();
+        $students = $lab->enrolledStudents()->get();
+        $studentProgress = array();
+
+
+        foreach($students as $user) {
+          $progress = collect([]);
+          $marks = 0;
+
+          foreach($tasks as $task){
+            // If task has been completed (aka database entry, push it to array)
+            if($user->checkTaskProgress($task)){
+              $taskProgress = $user->getTaskProgress($task)->first();
+              $progress->push($taskProgress);
+              $marks += $taskProgress->marks;
+            // else create a new task progress with status 0 and push to array
+            } else {
+              $taskProgress = new TaskProgress;
+              $taskProgress->user_id = $user->id;
+              $taskProgress->lab_id = $lab->id;
+              $taskProgress->task_id = $task->id;
+              $taskProgress->status = 0;
+              $progress->push($taskProgress);
+            }
+          }
+
+          $studentProgress[] = array('student' => $user, 'progress' => $progress, 'marks' => $marks);
+        }
+
+
+        return view('taskprogress.index')->with('lab', $lab)->with('tasks', $tasks)->with('studentProgress', $studentProgress)->with('totalMarks', $totalMarks);
     }
 
     /**

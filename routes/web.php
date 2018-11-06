@@ -66,6 +66,7 @@ Route::delete('/lab/{lab_id}/task/{task_id}', 'TaskController@destroy')->name('t
 
 
 // Task Progress Routes
+Route::get('/lab/{lab_id}/progress', 'TaskProgressController@index')->name('taskprogress.index')->middleware('modifyLabPermission');
 Route::post('/taskprogress/store', 'TaskProgressController@store')->name('taskprogress.store')->middleware('checkLabPermission');
 
 // Enrollment Routes
