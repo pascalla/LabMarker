@@ -17,64 +17,19 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // Generate Overseer
-        // Probably should of used factories for this
+      $students = factory(App\User::class, 100)->make();
 
-        $overseer = new User;
-        $overseer->name = "Monika";
-        $overseer->email = "monika@swansea.ac.uk";
-        $overseer->password = Hash::make('pass');
-        $overseer->save();
-        $overseer->assignRole('overseer');
+      $students->each(function($student) {
+          $student->assignRole('student');
+          $student->save();
+      });
 
-        // Generate some Markers
 
-        $marker = new User;
-        $marker->name = "Marker Dennis";
-        $marker->email = "marker1@swansea.ac.uk";
-        $marker->password = Hash::make('pass');
-        $marker->save();
-        $marker->assignRole('marker');
+      $lecturers = factory(App\User::class, 5)->make();
 
-        $marker = new User;
-        $marker->name = "Marker George";
-        $marker->email = "marker2@swansea.ac.uk";
-        $marker->password = Hash::make('pass');
-        $marker->save();
-        $marker->assignRole('marker');
-
-        // Generate some Lecturers
-
-        $lecturer = new User;
-        $lecturer->name = "lecturer Daniel";
-        $lecturer->email = "lecturer1@swansea.ac.uk";
-        $lecturer->password = Hash::make('pass');
-        $lecturer->save();
-        $lecturer->assignRole('lecturer');
-
-        $lecturer = new User;
-        $lecturer->name = "lecturer Jim";
-        $lecturer->email = "lecturer2@swansea.ac.uk";
-        $lecturer->password = Hash::make('pass');
-        $lecturer->save();
-        $lecturer->assignRole('lecturer');
-
-        // Generate some students
-
-        $student = new Student;
-        $student->student_number = 123456;
-        $student->name = "Boshua Jackman";
-        $student->save();
-
-        $student = new Student;
-        $student->student_number = 654321;
-        $student->name = "James McGill";
-        $student->save();
-
-        $student = new Student;
-        $student->student_number = 321456;
-        $student->name = "George White";
-        $student->save();
-
+      $lecturers->each(function($lecturer) {
+          $lecturer->assignRole('lecturer');
+          $lecturer->save();
+      });
     }
 }
