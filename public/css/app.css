@@ -10480,6 +10480,11 @@ h2 {
   margin-top: 20px;
 }
 
+.btn-tiny {
+  padding: 0.625rem 1.25rem 0.6875rem 1.25rem;
+  font-size: 0.6875rem;
+}
+
 /** Colours **/
 
 .red {

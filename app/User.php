@@ -52,6 +52,14 @@ class User extends Authenticatable
       return $this->hasMany('App\TaskProgress')->where('task_id', $task->id)->get();
     }
 
+    public function joinedGroups(){
+      return $this->belongsToMany('App\Group', 'group_members');
+    }
+
+    public function inGroup($group){
+      return $this->joinedGroups()->get()->contains($group);
+    }
+
     public function checkTaskProgress($task){
       //return $this->belongsToMany('App\TaskProgress', 'tasks_progress')->pluck('tasks_progress.task_id')->contains($task->id);
       return $this->hasMany('App\TaskProgress')->where('task_id', $task->id)->pluck('tasks_progress.task_id')->contains($task->id);
