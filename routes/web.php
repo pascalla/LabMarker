@@ -26,7 +26,9 @@ Route::get('/user/bulkcreate', 'UserController@create')->name('user.bulkcreate')
 Route::get('/users', 'UserController@index')->name('user.index')->middleware('permission:admin');
 Route::get('/user/{id}', 'UserController@show')->name('user.show')->middleware('permission:admin');
 Route::post('/user/store', 'UserController@store')->name('user.store')->middleware('permission:admin');
-Route::get('/lab/{lab_id}/user/{user_id}', 'UserController@showStudent')->name('user.showStudent')->middleware('checkLabPermission');
+
+// Student Routes
+Route::get('/lab/{lab_id}/user/{user_id}', 'StudentController@show')->name('student.show')->middleware('checkLabPermission');
 
 // Lab Routes
 Route::get('/lab/create', 'LabController@create')->name('lab.create')->middleware('permission:create labs');
