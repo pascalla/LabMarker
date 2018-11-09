@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Lab;
+use App\User;
+use App\TaskProgress;
+use Session;
+use App\Imports\UsersImport;
+use Excel;
+
 class StudentController extends Controller
 {
     /**
@@ -23,7 +30,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('student.create');
     }
 
     /**
@@ -34,7 +41,31 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $request->validate([
+        'students' => 'required|mimes:xlsx,csv',
+      ]);
+
+      $errors = array();
+      $userCount = 0;
+      $users = (new UsersImport)->toCollection($request->file('students'))[0];
+      foreach($users as $user){
+
+        if(User::where('identifier', $user[0])->first()){
+          $errors[] = "A user with the id of " . $user[0] . " already exists.";
+          continue;
+        }
+
+        $student = new User;
+        $student->identifier = $user[0];
+        $student->firstname = $user[1];
+        $student->surname = $user[2];
+        $student->save();
+
+        $userCount++;
+      }
+
+      Session::flash('success', 'You have created ' . $userCount .' student accounts with ' . count($errors) . ' errors');
+      return redirect()->route('student.create')->withErrors($errors);
     }
 
     public function show($lab_id, $user_id){

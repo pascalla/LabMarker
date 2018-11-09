@@ -29,6 +29,8 @@ Route::post('/user/store', 'UserController@store')->name('user.store')->middlewa
 
 // Student Routes
 Route::get('/lab/{lab_id}/user/{user_id}', 'StudentController@show')->name('student.show')->middleware('checkLabPermission');
+Route::get('/student/create', 'StudentController@create')->name('student.create')->middleware('permission:admin');
+Route::post('/student', 'StudentController@store')->name('student.store')->middleware('permission:admin');
 
 // Lab Routes
 Route::get('/lab/create', 'LabController@create')->name('lab.create')->middleware('permission:create labs');
