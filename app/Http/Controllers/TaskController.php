@@ -32,7 +32,7 @@ class TaskController extends Controller
     public function index($id)
     {
       $lab = Lab::findOrFail($id);
-      $tasks = Task::all();
+      $tasks = $lab->getTasks()->get();
       return view('tasks.index')->with('lab', $lab)->with('tasks', $tasks);
     }
 

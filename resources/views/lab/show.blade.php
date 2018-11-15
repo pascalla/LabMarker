@@ -16,7 +16,7 @@
     @include('partials._messages')
 
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12 p-4">
           <h1 class="mb-2">{{ $lab->course_code }}</<h1>
           <div class="row">
             <a href="{{ route('taskprogress.index', $lab->id) }}"><button class="btn btn-primary">Student Progress</button></a>

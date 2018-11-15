@@ -38,8 +38,10 @@ class StudentProgressExport implements FromView, ShouldAutoSize
         $studentProgress->firstname = $student->firstname;
         $studentProgress->surname = $student->surname;
         $marks = 0;
+        $totalMarks = 0;
 
         foreach($tasks as $task){
+          $totalMarks += $task->marks;
           if($student->checkTaskProgress($task)){
             $taskProgress = $student->getTaskProgress($task)->first();
             $studentProgress->{$task->name} = $taskProgress->marks;
@@ -48,6 +50,9 @@ class StudentProgressExport implements FromView, ShouldAutoSize
             $studentProgress->{$task->name} = 0;
           }
         }
+
+        $studentProgress->totalMarks = $marks;
+        $studentProgress->totalMarksPercentage = ($marks/$totalMarks)*100;
 
         $collection->push($studentProgress);
       }

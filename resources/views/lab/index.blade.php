@@ -20,8 +20,7 @@
                   @foreach($labs as $lab)
                     @if(auth()->user()->can('marker ' . $lab->course_code) || auth()->user()->can('view labs'))
                       <a href="{{ route('student.index', ['id' => $lab->id ]) }}">
-                        <button class="btn btn-info">{{ $lab->course_code }}</button>
-                      </a>
+                        <button class="btn btn-info">{{ $lab->course_code }}</button></a>
                     @endcan
                   @endforeach
                 </div>

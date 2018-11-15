@@ -7,6 +7,8 @@
         @foreach($tasks as $task)
           <th>{{ $task->name }}</th>
         @endforeach
+        <th>Total Marks</th>
+        <th>Total Mark Percentage</th>
       </tr>
     </thead>
     <tbody>
@@ -18,6 +20,8 @@
               @foreach($tasks as $task)
                 <td>{{ $progress->{$task->name} }}</td>
               @endforeach
+              <td>{{ $progress->totalMarks }}</td>
+              <td>{{ $progress->totalMarksPercentage }}</td>
           </tr>
       @endforeach
     </tbody>

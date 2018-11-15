@@ -42,7 +42,7 @@ class TaskProgress extends Model
       case '1':
         return 'fi-check green';
       case '2':
-        return 'fi-check yellow';
+        return 'fi-check amber';
       case '3':
         return 'fi-check red';
       default:

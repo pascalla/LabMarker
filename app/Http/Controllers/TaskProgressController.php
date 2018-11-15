@@ -99,6 +99,10 @@ class TaskProgressController extends Controller
       } else {
         $task = Task::findOrFail($request->task_id);
 
+        // If there was no deadlines, full marks for everyone!
+        $marks = $task->marks;
+        $status = 1;
+
         // Check if we there are deadlines in place
         if(isset($task->full_marks) || isset($task->half_marks)){
           // If we are within the full marks deadline and its set give em full marks!
@@ -116,10 +120,6 @@ class TaskProgressController extends Controller
           }
         }
 
-        // If there was no deadlines, full marks for everyone!
-        $marks = $task->marks;
-        $status = 1;
-
         $taskProgress = new TaskProgress;
         $taskProgress->user_id= $request->user_id;
         $taskProgress->task_id = $request->task_id;
@@ -136,7 +136,8 @@ class TaskProgressController extends Controller
     }
 
     public function download($lab_id){
-      return (new StudentProgressExport($lab_id))->download('studentprogress.xlsx');
+      $lab = Lab::findOrFail($lab_id);
+      return (new StudentProgressExport($lab_id))->download($lab->course_code . ' Student Progress.xlsx');
     }
 
     /**
