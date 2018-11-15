@@ -9,14 +9,14 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('lab.modify', $lab->id) }}">{{ $lab->course_code }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('lab.show', $lab->id) }}">{{ $lab->course_code }}</a></li>
         <li class="breadcrumb-item active">Groups</li>
       </ol>
     </nav>
 
     @include('partials._messages')
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-6">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-sm-12">
           <h1>{{ $lab->course_code }} Groups ({{ $groups->count()}})</h2>
           <p>
             Groups are collections of students. Markers can view entire groups of students for easy marking. Groups are optional and do not need to be used. Students can be members of multiple groups.
@@ -32,7 +32,7 @@
                 {{ Form::submit('Delete Group', ['class' => 'd-inline btn btn-tiny btn-danger']) }}
               {{ Form::close() }}
 
-              <table class="table mt-5">
+              <table class="table table-sm mt-5">
                 <tr>
                   <th>Student Number</th>
                   <th>Surname</th>
@@ -47,7 +47,7 @@
                   <td>
                     {{ Form::open(['url' => route('groupmember.destroy', [$lab->id, $group->id, $student->id]), 'method' => 'DELETE', 'class' => 'form-delete d-inline']) }}
                       {{ Form::hidden('lab', $lab->id) }}
-                      {{ Form::submit('Delete', ['class' => 'd-inline btn btn-tiny btn-danger']) }}
+                      {{ Form::submit('Delete', ['class' => 'd-inline btn btn-danger btn-tiny']) }}
                     {{ Form::close() }}
                   </td>
                 </tr>

@@ -67,7 +67,7 @@ class LabController extends Controller
         $lab->save();
 
 
-        return redirect()->route('lab.modify', $lab->id);
+        return redirect()->route('lab.show', $lab->id);
     }
 
     /**
@@ -78,29 +78,11 @@ class LabController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
-
-        $lab = Lab::findOrFail($id);
-        $markers = User::permission('marker ' . $lab->course_code)->get();
-
-        $tasks = Task::where('lab_id', $lab->id)->get();
-
-        $students = $lab->enrolledStudents()->where('enrollments.deleted_at', null)->get();
-
-        return view('lab.show')->with('lab', $lab)->with('markers', $markers)->with('tasks', $tasks)->with('students', $students);
+      $lab = Lab::findOrFail($id);
+      $students = $lab->enrolledStudents()->get();
+      return view('lab.show')->with('lab', $lab)->with('students', $students);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function modify($id)
-    {
-        $lab = Lab::findOrFail($id);
-        return view('lab.modify')->with('lab', $lab);
-    }
 
 
     /**
@@ -114,17 +96,6 @@ class LabController extends Controller
         $lab = Lab::findOrFail($id);
         return view('lab.edit')->with('lab', $lab);
     }
-
-    public function groups($id)
-    {
-      return view('lab.groups');
-    }
-
-    public function progress($id)
-    {
-      return view('lab.progress');
-    }
-
 
 
     /**

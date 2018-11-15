@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('
+layouts.app')
 
 @section('content')
 <div class="container-fluid">
@@ -21,7 +22,7 @@
                   <h2>Manage Labs</h1>
                   @foreach($labs as $lab)
                     @if(auth()->user()->can('marker ' . $lab->course_code) || auth()->user()->can('view labs'))
-                      <a href="{{ route('lab.modify', $lab->id) }}"><button class="btn btn-primary">{{ $lab->course_code }}</button></a>
+                      <a href="{{ route('lab.show', $lab->id) }}"><button class="btn btn-primary">{{ $lab->course_code }}</button></a>
                     @endif
                   @endforeach
                   <a href="{{ route('lab.create') }}"><button class="btn btn-success">Create New Lab</button></a>

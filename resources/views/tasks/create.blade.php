@@ -10,7 +10,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('lab.modify', $lab->id) }}">{{ $lab->course_code }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('lab.show', $lab->id) }}">{{ $lab->course_code }}</a></li>
       <li class="breadcrumb-item"><a href="{{ route('task.index', $lab->id) }}">Lab Tasks</a></li>
       <li class="breadcrumb-item active" aria-current="page">Create Task</li>
     </ol>

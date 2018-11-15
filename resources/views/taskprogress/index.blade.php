@@ -9,12 +9,12 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('lab.modify', $lab->id) }}">{{ $lab->course_code }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('lab.show', $lab->id) }}">{{ $lab->course_code }}</a></li>
       <li class="breadcrumb-item active">Student Progress</li>
     </ol>
   </nav>
   <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-8 col-sm-12">
       <h2>{{ $lab->course_code }} Student Progress</h2>
       <a href="{{ route('taskprogress.download', $lab->id) }}"><button class="btn btn-success mt-2">Export to CSV</button></a>
       <table class="table table-striped mt-5">

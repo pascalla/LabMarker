@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Lab;
 use App\User;
 use App\TaskProgress;
+use App\Task;
 use Session;
 use App\Imports\UsersImport;
 use Excel;
@@ -18,9 +19,15 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($lab_id)
     {
-        //
+
+      $lab = Lab::findOrFail($lab_id);
+      $groups = $lab->getGroups()->get();
+
+      $students = $lab->enrolledStudents()->where('enrollments.deleted_at', null)->get();
+
+      return view('student.index')->with('lab', $lab)->with('students', $students)->with('groups', $groups);
     }
 
     /**
