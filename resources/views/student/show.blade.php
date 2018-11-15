@@ -22,35 +22,52 @@
       <div class="col-md-6">
         <h1>{{ $lab->course_code }}</h1>
         <h2>{{ $user->surname }}, {{ $user->firstname}} ({{ $user->identifier}})</h2>
-        <div class="card mt-5">
-            <div class="card-header">{{ $user->firstname }}'s Task Progress</div>
-            <div class="card-body">
-              <table class="table">
-                <tr>
-                  <th>Task Name</th>
-                  <th> </th>
-                  <th>Action</th>
-                </tr>
-                @foreach($tasks as $key => $task)
-                <tr>
-                  <td>{{ $task->name }}</td>
-                  <td><i id="{{ $user->id  }}-{{ $task->id }}" class="{{ $progress->get($key)->getProgressIcon( )}}"></i></td>
-                  <td>
-                    @if($progress->get($key)->status == 0)
-                      {{ Form::open(['route' => ['taskprogress.store'], 'class' => 'form-add']) }}
-                        {{ Form::hidden('lab', $lab->id) }}
-                        {{ Form::hidden('user_id', $user->id) }}
-                        {{ Form::hidden('task_id', $task->id) }}
-                        {{Form::submit('Sign Off', ['class' => 'btn btn-danger']) }}
-                      {{ Form::close() }}
-                    @else
-                      <button class="btn btn-primary">Signed Off</button>
-                    @endif
-                  </td>
-                </tr>
-                @endforeach
-              </table>
-            </div>
+        <table class="table table-striped table-borderless table-sm">
+          <tr>
+            <th width="40%">Task Name</th>
+            <th></th>
+            <th width="40%">Action</th>
+          </tr>
+          @foreach($tasks as $key => $task)
+          <tr>
+            <td>{{ $task->name }}</td>
+            <td><i id="{{ $user->id  }}-{{ $task->id }}" class="{{ $progress->get($key)->getProgressIcon( )}}"></i></td>
+            <td>
+              @if($progress->get($key)->status == 0)
+                {{ Form::open(['route' => ['taskprogress.store'], 'class' => 'form-add']) }}
+                  {{ Form::hidden('lab', $lab->id) }}
+                  {{ Form::hidden('user_id', $user->id) }}
+                  {{ Form::hidden('task_id', $task->id) }}
+                  {{Form::submit('Sign Off', ['class' => 'btn btn-danger']) }}
+                {{ Form::close() }}
+              @else
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="btn btn-primary btn-signoff">Signed Off</button>
+                  </div>
+                </div>
+              @endif
+
+              @if(auth()->user()->can('marker ' . $lab->course_code) || auth()->user()->can('admin'))
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="btn btn-danger btn-advanced d-none">Remove Sign Off</button>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <button class="btn btn-danger btn-advanced d-none">Override Full Marks</button>
+                  </div>
+                </div>
+              @endcan
+            </td>
+          </tr>
+          @endforeach
+        </table>
+        <div class="row">
+          <div class="col-md-12">
+            <button id="show-advanced" class="btn btn-success">Show Advanced Buttons</button>
+          </div>
         </div>
       </div>
   </div>
@@ -81,6 +98,11 @@ $(document).ready(function() {
 
       e.preventDefault(); // avoid to execute the actual submit of the form.
   });
+
+  $("#show-advanced").click(function(e) {
+    $('.btn-advanced').toggleClass('d-none');
+  });
+
 });
 </script>
 @endsection

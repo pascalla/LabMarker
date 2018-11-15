@@ -10523,6 +10523,16 @@ h2 {
   border-radius: 0;
 }
 
+.btn-advanced {
+  width: 100%;
+  font-size: 0.7rem;
+}
+
+.btn-signoff {
+  width: 100%;
+  font-size: 0.7rem;
+}
+
 .breadcrumb-item a {
   font-size: 0.8rem;
 }
