@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                   {{ Form::hidden('lab', $lab->id) }}
-                  {{ Form::submit('Create', array('class' => 'btn  btn-primary btn-block'))}}
+                  {{ Form::submit('Add Members', array('class' => 'btn  btn-primary btn-block'))}}
                 </div>
               {{ Form::close() }}
             </div>
