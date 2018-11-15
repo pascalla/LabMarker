@@ -11,8 +11,7 @@
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ route('lab.modify', $lab->id) }}">{{ $lab->course_code }}</a></li>
         <li class="breadcrumb-item"><a href="{{ route('group.index', $lab->id) }}">Groups</a></li>
-        <li class="breadcrumb-item" aria-current="page">{{ $group->name }}</li>
-        <li class="breadcrumb-item active" aria-current="page">Add Members</li>
+        <li class="breadcrumb-item active" aria-current="page">Create Group</li>
       </ol>
     </nav>
 
@@ -23,14 +22,18 @@
           <div class="card">
             <div class="card-header">Create Group</div>
             <div class="card-body">
-              {{ Form::open(array('url' => route('groupmember.store', [$lab->id, $group->id]) )) }}
+              {{ Form::open(array('url' => route('group.store', [$lab->id]) )) }}
+                <div class="form-group">
+                  {{ Form::label('name', 'Group Name:')}}
+                  {{ Form::text('name', old('name'), array('class' => 'form-control')) }}
+                </div>
                 <div class="form-group">
                   {{ Form::label('members', 'Group Members:')}}
                   {{ Form::select('members[]', $students, null, array('class' => 'form-control', 'multiple' => 'true', 'id' => 'members')) }}
                 </div>
                 <div class="form-group">
                   {{ Form::hidden('lab', $lab->id) }}
-                  {{ Form::submit('Add Members', array('class' => 'btn  btn-primary btn-block'))}}
+                  {{ Form::submit('Create Group', array('class' => 'btn  btn-primary btn-block'))}}
                 </div>
               {{ Form::close() }}
             </div>
