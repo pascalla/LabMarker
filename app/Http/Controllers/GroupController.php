@@ -89,7 +89,7 @@ class GroupController extends Controller
       }
 
       Session::flash('success', 'You have created a new group, there was ' . count($errors) . ' errors creating the group.');
-      return redirect()->route('group.create', $lab->id)->withErrors($errors);
+      return redirect()->route('group.index', $lab->id)->withErrors($errors);
     }
 
     /**

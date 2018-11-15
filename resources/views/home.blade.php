@@ -48,7 +48,7 @@
                       @foreach($studentLab["tasks"] as $key => $task)
                       <tr>
                         <td>{{ $task->name }}</td>
-                        <td></td>
+                        <td>{{ $task->marks }}</td>
                         <td>
                           @if($studentLab["progress"]->get($key)->status == 0)
                             <button class="btn btn-danger">Not Signed Off</button>
