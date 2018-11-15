@@ -58,7 +58,8 @@ class TaskController extends Controller
       $request->validate([
         'lab' => 'required',
         'name' => 'required',
-        'marks' => 'required|numeric'
+        'marks' => 'required|numeric',
+        ''
       ]);
 
       $task = new Task;
@@ -67,7 +68,7 @@ class TaskController extends Controller
       $task->marks = $request->marks;
 
       if(isset($request->half)){
-        $date = new Carbon($request->half_marks_date);
+        $date = new Carbon($request->half_expiry_date);
         $date = $date->toDateTimeString();
         $task->half_marks = $date;
       }
