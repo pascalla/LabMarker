@@ -43,20 +43,24 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                          </li>
                         @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">{{ Auth::user()->getDropDownName() }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                        </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="#">{{ Auth::user()->getDropDownName() }}</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link" href="{{ route('logout') }}"
+                                 onclick="event.preventDefault();
+                                               document.getElementById('logout-form').submit();">
+                                  {{ __('Logout') }}
+                              </a>
+                          </li>
+
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                              @csrf
+                          </form>
                         @endguest
                     </ul>
                 </div>
