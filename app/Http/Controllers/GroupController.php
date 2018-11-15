@@ -8,6 +8,8 @@ use App\Lab;
 use App\Group;
 use App\User;
 use App\GroupMember;
+use App\TaskProgress;
+use App\Task;
 use Session;
 
 class GroupController extends Controller
@@ -100,7 +102,32 @@ class GroupController extends Controller
      */
     public function show($lab_id, $group_id)
     {
-        return view('group.show');
+      $group = Group::findOrFail($group_id);
+      $lab = Lab::findOrFail($lab_id);
+      $tasks = $lab->getTasks()->get();
+      $students = $group->getMembers()->get();
+      $studentsProgress = array();
+
+      foreach($students as $student){
+        $progress = collect([]);
+
+        foreach($tasks as $task) {
+          if($student->checkTaskProgress($task)){
+            $progress->push($student->getTaskProgress($task)->first());
+          } else {
+            $taskProgress = new TaskProgress;
+            $taskProgress->user_id = $student->id;
+            $taskProgress->lab_id = $lab->id;
+            $taskProgress->task_id = $task->id;
+            $taskProgress->status = 0;
+            $progress->push($taskProgress);
+          }
+        }
+        $studentsProgress[$student->identifier] = $progress;
+      }
+
+
+      return view('group.show')->with('group', $group)->with('lab', $lab)->with('students', $students)->with('tasks', $tasks)->with('studentsProgress', $studentsProgress);
     }
 
     /**

@@ -34,7 +34,7 @@
                 @foreach($tasks as $key => $task)
                 <tr>
                   <td>{{ $task->name }}</td>
-                  <td><i class="{{ $progress->get($key)->getProgressIcon( )}}"></i></td>
+                  <td><i id="{{ $user->id  }}-{{ $task->id }}" class="{{ $progress->get($key)->getProgressIcon( )}}"></i></td>
                   <td>
                     @if($progress->get($key)->status == 0)
                       {{ Form::open(['route' => ['taskprogress.store'], 'class' => 'form-add']) }}
@@ -67,8 +67,6 @@ $(document).ready(function() {
       var form = $(this);
       var url = form.attr('action');
 
-
-
       $.ajax({
         type: "POST",
         url: url,
@@ -76,6 +74,7 @@ $(document).ready(function() {
         success: function(data) {
              if(data.status == "success"){
                submit.removeClass("btn-warning").addClass("btn-primary").prop('disabled', true).val('Signed Off');
+               var icon = $('#' + data.user_id + '-' + data.task_id).removeClass('fi-x').addClass(data.icon);
              }
          }
       });

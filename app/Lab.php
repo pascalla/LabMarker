@@ -28,6 +28,11 @@ class Lab extends Model
     return $this->hasMany('App\Task');
   }
 
+  // get list of tasks for the lab
+  public function getGroups(){
+    return $this->hasMany('App\Group');
+  }
+
   public function getTotalMarks(){
     $total = 0;
     foreach($this->getTasks()->get() as $task){

@@ -9,7 +9,7 @@
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-      <li class="breadcrumb-item"><a href="{{ route('lab.modify', $lab->id) }}">{{ $lab->course_code }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ route('lab.show', $lab->id) }}">{{ $lab->course_code }}</a></li>
       <li class="breadcrumb-item"><a href="{{ route('enrollment.index', $lab->id) }}">Enrollments</a></li>
       <li class="breadcrumb-item active" aria-current="page">Enrol Students</li>
     </ol>
@@ -24,8 +24,8 @@
           <div class="card-body">
             {{ Form::open(array('url' => route('enrollment.store', $lab->id) )) }}
               <div class="form-group">
-              {{ Form::label('students', 'Students:')}}
-              {{ Form::select('students[]', $students, null, array('class' => 'form-control', 'multiple' => 'true', 'id' => 'students')) }}
+                {{ Form::label('students', 'Students:')}}
+                {{ Form::select('students[]', $students, null, array('class' => 'form-control', 'multiple' => 'true', 'id' => 'students')) }}
               </div>
               <div class="form-group">
                 {{ Form::hidden('lab', $lab->id) }}

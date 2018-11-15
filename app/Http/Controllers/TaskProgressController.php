@@ -129,7 +129,7 @@ class TaskProgressController extends Controller
 
         $taskProgress->save();
 
-        return response(['status' => 'success']);
+        return response(['status' => 'success', 'icon' => $taskProgress->getProgressIcon(), 'user_id' => $request->user_id, 'task_id' => $request->task_id]);
       }
 
 
