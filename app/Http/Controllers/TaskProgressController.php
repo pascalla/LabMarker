@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Exports\StudentProgressExport;
+
 use App\TaskProgress;
 use App\Task;
 use App\User;
@@ -131,6 +133,10 @@ class TaskProgressController extends Controller
       }
 
 
+    }
+
+    public function download($lab_id){
+      return (new StudentProgressExport($lab_id))->download('studentprogress.xlsx');
     }
 
     /**

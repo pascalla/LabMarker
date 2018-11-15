@@ -16,7 +16,7 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <h2>{{ $lab->course_code }} Student Progress</h2>
-      <button class="btn btn-success mt-2">Export to CSV</button>
+      <a href="{{ route('taskprogress.download', $lab->id) }}"><button class="btn btn-success mt-2">Export to CSV</button></a>
       <table class="table table-striped mt-5">
         <tr>
           <th>Name</th>

@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\Importable;
 
 
-class UsersImport implements ToModel
+class UsersImport implements ToModel, WithHeadings
 {
     use Importable;
 
@@ -18,6 +18,15 @@ class UsersImport implements ToModel
             'firstname' => $row[1],
             'surname' => $row[2],
         ]);
+    }
+
+    public function headings(): array
+    {
+        return [
+            'Student Number',
+            'First Name',
+            'Surname',
+        ];
     }
 
 }
