@@ -23,6 +23,18 @@ class Lab extends Model
     return $this->belongsToMany('App\User', 'enrollments')->where('enrollments.deleted_at', null)->orderBy('surname')->orderBy('firstname')->orderBy('identifier');
   }
 
+  public function removeMarker($student){
+    if($student->hasPermissionTo('marker ' . $this->course_code)) {
+      $student->revokePermissionTo('marker ' . $this->course_code);
+    }
+
+    $permissions = $student->getAllPermissions();
+
+    if($permissions->count() == 0){
+      $student->removeRole('marker');
+    }
+  }
+
   // get list of tasks for the lab
   public function getTasks(){
     return $this->hasMany('App\Task');

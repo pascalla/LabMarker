@@ -26,12 +26,21 @@
                 <th>Options</th>
               </tr>
               @foreach($markers as $marker)
+                @if(!$marker->can('lecturer ' . $lab->course_code))
+
+
                 <tr>
                   <td>{{ $marker->identifier }}</td>
                   <td>{{ $marker->firstname }}</td>
                   <td>{{ $marker->surname }}</td>
-                  <td><button class="btn btn-danger">Remove</button>
+                  <td>
+                    {{ Form::open(['route' => ['marker.destroy', $lab->id, $marker->id], 'method' => 'DELETE', 'class' => 'form-delete d-inline']) }}
+                      {{ Form::hidden('lab', $lab->id) }}
+                      {{ Form::submit('Delete', ['class' => 'd-inline btn btn-danger']) }}
+                    {{ Form::close() }}
+                  </td>
                 </tr>
+                @endif
               @endforeach
             </table>
           </div>
@@ -39,4 +48,21 @@
       </div>
   </div>
 </div>
+
+@include('partials._delete')
+
+@endsection
+
+
+@section('scripts')
+<script>
+$('.form-delete').on('click', function(e){
+    e.preventDefault();
+    var form = $(this);
+    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+        .on('click', '#delete-btn', function(){
+            form.submit();
+        });
+});
+</script>
 @endsection

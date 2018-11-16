@@ -38,7 +38,7 @@
                   {{ Form::hidden('lab', $lab->id) }}
                   {{ Form::hidden('user_id', $user->id) }}
                   {{ Form::hidden('task_id', $task->id) }}
-                  {{Form::submit('Sign Off', ['class' => 'btn btn-danger']) }}
+                  {{Form::submit('Sign Off', ['class' => 'btn btn-danger btn-signoff']) }}
                 {{ Form::close() }}
               @else
                 <div class="row">

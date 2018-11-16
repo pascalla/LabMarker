@@ -60,6 +60,7 @@ Route::delete('/lab/{lab_id}/group/{group_id}/member/{student_id}', 'GroupMember
 Route::get('/lab/{lab_id}/marker', 'MarkerController@index')->name('marker.index')->middleware('modifyLabPermission');
 Route::get('/lab/{lab_id}/marker/create', 'MarkerController@create')->name('marker.create')->middleware('modifyLabPermission');
 Route::post('/lab/{lab_id}/marker', 'MarkerController@store')->name('marker.store')->middleware('modifyLabPermission');
+Route::delete('/lab/{lab_id}/marker/{student_id}', 'MarkerController@destroy')->name('marker.destroy')->middleware('modifyLabPermission');
 
 // Task Routes
 Route::get('/lab/{lab_id}/tasks', 'TaskController@index')->name('task.index')->middleware('modifyLabPermission');

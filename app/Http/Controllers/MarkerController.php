@@ -34,7 +34,7 @@ class MarkerController extends Controller
     public function index($lab_id)
     {
         $lab = Lab::findOrFail($lab_id);
-        $markers = User::role('marker')->get();
+        $markers = User::permission('marker ' . $lab->course_code)->get();
         return view('marker.index')->with('lab', $lab)->with('markers', $markers);
     }
 
@@ -115,13 +115,15 @@ class MarkerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($lab_id, $student_id)
     {
-        //
+        $lab = Lab::findOrFail($lab_id);
+        $student = User::findOrFail($student_id);
+
+        $lab->removeMarker($student);
+
+        Session::flash('success', 'Successfully removed marker ' . $student->getDropDownName());
+        return redirect()->route('marker.index', $lab->id);
     }
 
-
-    public function assignLabMarker(Request $request){
-
-    }
 }
