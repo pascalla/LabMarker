@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Exports\UsersTemplateExport;
+
 use App\Lab;
 use App\User;
 use App\TaskProgress;
@@ -25,7 +27,7 @@ class StudentController extends Controller
       $lab = Lab::findOrFail($lab_id);
       $groups = $lab->getGroups()->get();
 
-      $students = $lab->enrolledStudents()->where('enrollments.deleted_at', null)->get();
+      $students = $lab->enrolledStudents()->get();
 
       return view('student.index')->with('lab', $lab)->with('students', $students)->with('groups', $groups);
     }
@@ -73,6 +75,10 @@ class StudentController extends Controller
 
       Session::flash('success', 'You have created ' . $userCount .' student accounts with ' . count($errors) . ' errors');
       return redirect()->route('student.create')->withErrors($errors);
+    }
+
+    public function template(){
+      return Excel::download(new UsersTemplateExport, 'template.xlsx');
     }
 
     public function show($lab_id, $user_id){

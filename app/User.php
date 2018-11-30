@@ -7,11 +7,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use App\Enrollment;
 
 class User extends Authenticatable
 {
-    use SoftDeletes;
     use Notifiable;
     use HasRoles;
 
@@ -38,14 +38,24 @@ class User extends Authenticatable
       return $this->surname . ', ' . $this->firstname . ' (' . $this->identifier . ')';
     }
 
-    // Get Collection of labs that this user has enrolled in (past and present)
+    // Get Collection of labs that this user has enrolled in (past)
+    public function archivedLabs(){
+      return $this->belongsToMany('App\Lab', 'enrollments')->where('unenrollment_date', '!=', null);
+    }
+
+    // Get Collection of labs that this user is enrolled in (present)
     public function enrolledLabs(){
+      return $this->belongsToMany('App\Lab', 'enrollments')->where('unenrollment_date', null);
+    }
+
+    // Get Collection of labs that this user is enrolled in (present)
+    public function allLabs(){
       return $this->belongsToMany('App\Lab', 'enrollments');
     }
 
     // Check if user is enrolled in in lab.
     public function isEnrolled($lab){
-      return $this->enrolledLabs()->where('enrollments.deleted_at', null)->get()->contains($lab);
+      return $this->enrolledLabs()->get()->contains($lab);
     }
 
     public function getTaskProgress($task){
@@ -63,5 +73,11 @@ class User extends Authenticatable
     public function checkTaskProgress($task){
       //return $this->belongsToMany('App\TaskProgress', 'tasks_progress')->pluck('tasks_progress.task_id')->contains($task->id);
       return $this->hasMany('App\TaskProgress')->where('task_id', $task->id)->pluck('tasks_progress.task_id')->contains($task->id);
+    }
+
+    public function unenrollLab($lab){
+      $enrollment = Enrollment::where('user_id', $this->id)->where('lab_id', $lab->id)->first();
+      $enrollment->unenrollment_date = Carbon::now();
+      $enrollment->save();
     }
 }

@@ -17,8 +17,8 @@ class CreateEnrollmentsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('lab_id');
+            $table->date('unenrollment_date')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

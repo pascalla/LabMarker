@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 use App\Enrollment;
 use App\Student;
-
 use App\User;
 use App\Lab;
 use App\Task;
@@ -108,13 +108,13 @@ class LabController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-          'course_code' => 'required|unique:labs',
+          'course_code' => 'required|unique:labs,course_code,' . $id,
         ]);
 
         $lab = Lab::findOrFail($id);
         $lab->course_code = $request->course_code;
         $lab->save();
-
+        Session::flash('success', 'Successfully updated lab.');
         return redirect()->route('lab.edit', $lab->id);
     }
 
@@ -126,7 +126,20 @@ class LabController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $lab = Lab::findOrFail($id);
+        $lab->delete();
+
+        $permission = Permission::where('name', 'marker ' . $lab->course_code)->first();
+        $permission->delete();
+
+        $permission = Permission::where('name', 'lecturer ' . $lab->course_code)->first();
+        $permission->delete();
+
+        $permission = Permission::where('name', 'view ' . $lab->course_code)->first();
+        $permission->delete();
+
+        Session::flash('success', 'Successfully deleted lab.');
+        return redirect()->route('lab.index');
     }
 
 

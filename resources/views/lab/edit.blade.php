@@ -21,7 +21,7 @@
           <div class="card">
             <div class="card-header">Update {{ $lab->name }}</div>
             <div class="card-body">
-              {{ Form::open(array('url' => route('lab.update', $lab->id) )) }}
+              {{ Form::open(array('url' => route('lab.update', $lab->id), 'method' => 'PUT')) }}
                 <div class="form-group">
                   {{ Form::label('course_code', 'Course Code:')}}
                   {{ Form::text('course_code', $lab->course_code, array('class' => 'form-control')) }}

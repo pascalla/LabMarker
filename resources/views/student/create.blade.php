@@ -18,6 +18,7 @@
               <div class="card-header">Create Bulk Students</div>
 
               <div class="card-body">
+                <a href="{{ route('student.template') }}"><button class="btn btn-success mt-2 mb-5">Template</button></a>
                 {{ Form::open(array('route' => 'student.store', 'files' => true)) }}
                   <div class="form-group">
                     {{ Form::label('students', 'Students File:') }}

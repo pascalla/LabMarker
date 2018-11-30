@@ -35,9 +35,9 @@ layouts.app')
           @endif
 
           @if(auth()->user()->hasRole('student'))
-            @if(auth()->user()->enrolledLabs()->count() > 0)
+            @if(auth()->user()->allLabs()->count() > 0)
               @foreach($studentLabs as $studentLab)
-                <div class="card">
+                <div class="card mt-5">
                   <div class="card-header">{{ $studentLab["lab"]->course_code }}</div>
                   <div class="card-body">
                     <table class="table">

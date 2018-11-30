@@ -27,8 +27,6 @@
               </tr>
               @foreach($markers as $marker)
                 @if(!$marker->can('lecturer ' . $lab->course_code))
-
-
                 <tr>
                   <td>{{ $marker->identifier }}</td>
                   <td>{{ $marker->firstname }}</td>
@@ -49,7 +47,7 @@
   </div>
 </div>
 
-@include('partials._delete')
+@include('partials._delete', array('info' => 'This will remove the student as a marker in your labs.'))
 
 @endsection
 

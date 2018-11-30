@@ -63,16 +63,23 @@ class MarkerController extends Controller
     {
       $lab = Lab::findOrFail($request->lab);
       $studentsIdentifier = $request->input()["students"];
+      $errors = array();
+      $markers = 0;
 
       foreach($studentsIdentifier as $studentIdentifier){
         $student = User::where('identifier', $studentIdentifier)->first();
+        if($student->isEnrolled($lab)){
+          $errors[] = $student->identifier . " is already enrolled as a student so can not be a marker.";
+          continue;
+        }
         $student->assignRole('marker');
         $student->givePermissionTo('marker ' . $lab->course_code);
+        $markers++;
       }
 
-      Session::flash('success', 'Successfully added markers');
+      Session::flash('success', 'Successfully added ' . $markers . '  markers with ' . count($errors) . ' errors.');
 
-      return redirect()->route('marker.create', $request->lab);
+      return redirect()->route('marker.create', $request->lab)->withErrors($errors);
     }
 
     /**

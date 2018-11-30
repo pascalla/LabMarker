@@ -19,9 +19,10 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="card">
-            <div class="card-header">{{ $lab->course_code }} - Enrollments ({{ $students->count() }})</div>
+            <div class="card-header">{{ $lab->course_code }} - Enrolments ({{ $students->count() }})</div>
             <div class="card-body">
               <a href="{{ route('enrollments.create', $lab->id)}}"<button class="btn btn-success mb-3">Enrol Students</button></a>
+              <a href="{{ route('enrollments.create', $lab->id)}}"<button class="btn btn-danger mb-3">Uneroll Students</button></a>
               <table class="table">
                 <tr>
                   <th>Student Number</th>
@@ -38,7 +39,7 @@
                       {{ Form::open(['route' => ['enrollment.destroy'], 'method' => 'DELETE', 'class' => 'form-delete']) }}
                         {{ Form::hidden('lab', $lab->id) }}
                         {{ Form::hidden('student', $student->id) }}
-                        {{Form::submit('Disenroll', ['class' => 'btn btn-danger']) }}
+                        {{Form::submit('Unenroll', ['class' => 'btn btn-danger']) }}
                       {{ Form::close() }}
                     </td>
                   </tr>
@@ -50,7 +51,7 @@
     </div>
 </div>
 
-@include('partials._delete')
+@include('partials._delete', array('info' => 'This will delete the enrollment permanently from the database, the student will lose all progress on tasks. '))
 @endsection
 
 @section('scripts')

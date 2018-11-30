@@ -19,7 +19,6 @@ class CreateLabsTable extends Migration
             $table->text('course_code');
             $table->text('year');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

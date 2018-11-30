@@ -3,11 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lab extends Model
 {
-  use SoftDeletes;
 
   /**
    * The attributes that are mass assignable.
@@ -20,7 +18,7 @@ class Lab extends Model
 
   // Get list of Enrolled students in Lab
   public function enrolledStudents(){
-    return $this->belongsToMany('App\User', 'enrollments')->where('enrollments.deleted_at', null)->orderBy('surname')->orderBy('firstname')->orderBy('identifier');
+    return $this->belongsToMany('App\User', 'enrollments')->where('unenrollment_date', null)->orderBy('surname')->orderBy('firstname')->orderBy('identifier');
   }
 
   public function removeMarker($student){

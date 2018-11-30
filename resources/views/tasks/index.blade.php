@@ -53,7 +53,7 @@
   </div>
 </div>
 
-@include('partials._delete')
+@include('partials._delete', array('info' => 'This will delete the task permanently and all student\'s progress on this task will also be deleted.'))
 @endsection
 
 @section('scripts')

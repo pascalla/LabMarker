@@ -21,7 +21,6 @@ class CreateTasksTable extends Migration
             $table->date('half_marks')->nullable();
             $table->date('full_marks')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

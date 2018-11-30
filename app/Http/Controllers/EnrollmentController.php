@@ -31,7 +31,7 @@ class EnrollmentController extends Controller
     public function index($id)
     {
       $lab = Lab::findOrFail($id);
-      $students = $lab->enrolledStudents()->where('enrollments.deleted_at', null)->get();
+      $students = $lab->enrolledStudents()->get();
       return view('enrollments.index')->with('students', $students)->with('lab', $lab);
     }
 
@@ -124,9 +124,16 @@ class EnrollmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($lab_id)
     {
-        //
+        $lab = Lab::findOrFail($lab_id);
+        $students = $lab->enrolledStudents()->get();
+        foreach($students as $student){
+          $student->unenrollLab($lab);
+        }
+
+        Session::flash('success', 'Successfully reset year.');
+        return redirect()->route('lab.show', $lab_id);
     }
 
     /**
@@ -137,8 +144,6 @@ class EnrollmentController extends Controller
      */
     public function destroy(Request $request)
     {
-
-
         $lab_id = $request->lab;
         $user_id = $request->student;
 

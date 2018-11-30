@@ -36,10 +36,9 @@ class HomeController extends Controller
 
         $user = Auth::user();
 
-
         $studentLabs = array();
 
-        foreach($user->enrolledLabs()->where('enrollments.deleted_at', null)->get() as $lab){
+        foreach($user->allLabs()->get() as $lab){
           $tasks = $lab->getTasks()->get();
           $progress = collect([]);
 

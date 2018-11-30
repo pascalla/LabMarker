@@ -57,7 +57,7 @@
       </div>
   </div>
 </div>
-@include('partials._delete')
+@include('partials._delete', array('info'=> 'This will permanently delete the group. All members will be removed from the group.'))
 @endsection
 
 @section('scripts')

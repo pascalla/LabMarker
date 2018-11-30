@@ -11,7 +11,7 @@
     </nav>
 
     @include('partials._messages')
-    
+
     <div class="row justify-content-center">
         <div class="col-md-8">
               <div class="card mt-5">
@@ -36,7 +36,7 @@
                   <div class="card-body">
                     <p>Enrolled Labs:</p>
                     <ul>
-                      @foreach($user->enrolledLabs()->where('enrollments.deleted_at', null)->get() as $lab)
+                      @foreach($user->enrolledLabs()->get() as $lab)
                         <li>{{ $lab->course_code }}</li>
                       @endforeach
                     </ul>

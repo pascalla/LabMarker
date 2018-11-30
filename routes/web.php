@@ -32,24 +32,26 @@ Route::get('/lab/{lab_id}/students', 'StudentController@index')->name('student.i
 Route::get('/lab/{lab_id}/student/{user_id}', 'StudentController@show')->name('student.show')->middleware('checkLabPermission');
 Route::get('/student/create', 'StudentController@create')->name('student.create')->middleware('permission:admin');
 Route::post('/student', 'StudentController@store')->name('student.store')->middleware('permission:admin');
+Route::get('/student/template', 'StudentController@template')->name('student.template')->middleware('permission:admin');
 
 // Lab Routes
 Route::get('/lab/create', 'LabController@create')->name('lab.create')->middleware('permission:create labs');
 Route::get('/labs', 'LabController@index')->name('lab.index');
-//Route::get('/lab/{lab_id}', 'LabController@show')->name('lab.show')->middleware('checkLabPermission');
+Route::put('/lab/{lab_id}', 'LabController@update')->name('lab.update')->middleware('modifyLabPermission');
 Route::get('/lab/{lab_id}', 'LabController@show')->name('lab.show')->middleware('modifyLabPermission');
 Route::get('/lab/{lab_id}/edit', 'LabController@edit')->name('lab.edit')->middleware('modifyLabPermission');
-Route::get('/lab/{lab_id}/update', 'LabController@update')->name('lab.update')->middleware('modifyLabPermission');
+Route::delete('/lab/{lab_id}', 'LabController@destroy')->name('lab.destroy')->middleware('modifyLabPermission');
 Route::post('/lab', 'LabController@store')->name('lab.store')->middleware('permission:create labs');
 
 // Group Routes
 Route::get('/lab/{lab_id}/groups', 'GroupController@index')->name('group.index')->middleware('modifyLabPermission');
+Route::get('/lab/{lab_id}/group/create', 'GroupController@create')->name('group.create')->middleware('modifyLabPermission');
 Route::get('/lab/{lab_id}/group/{group_id}', 'GroupController@show')->name('group.show')->middleware('checkLabPermission');
 Route::get('/lab/{lab_id}/group/{group_id}/edit', 'GroupController@edit')->name('group.edit')->middleware('modifyLabPermission');
-Route::get('/lab/{lab_id}/group/create', 'GroupController@create')->name('group.create')->middleware('modifyLabPermission');
 Route::post('/lab/{lab_id}/group', 'GroupController@store')->name('group.store')->middleware('modifyLabPermission');
 Route::post('/lab/{lab_id}/group/{group_id}/update', 'GroupController@update')->name('group.update')->middleware('modifyLabPermission');
 Route::delete('/lab/{lab_id}/group/{group_id}', 'GroupController@destroy')->name('group.destroy')->middleware('modifyLabPermission');
+
 
 // Group Member Routes
 Route::get('/lab/{lab_id}/group/{group_id}/member/create', 'GroupMemberController@create')->name('groupmember.create')->middleware('modifyLabPermission');
@@ -81,4 +83,5 @@ Route::post('/taskprogress', 'TaskProgressController@store')->name('taskprogress
 Route::get('/lab/{lab_id}/enroll', 'EnrollmentController@index')->name('enrollment.index')->middleware('modifyLabPermission');
 Route::get('/lab/{lab_id}/enroll/create', 'EnrollmentController@create')->name('enrollments.create')->middleware('modifyLabPermission');
 Route::post('/lab/{lab_id}/enroll', 'EnrollmentController@store')->name('enrollment.store')->middleware('modifyLabPermission');
+Route::put('/lab/{lab_id}/enroll/update', 'EnrollmentController@update')->name('enrollment.update')->middleware('modifyLabPermission');
 Route::delete('/enrollments', 'EnrollmentController@destroy')->name('enrollment.destroy')->middleware('modifyLabPermission');
