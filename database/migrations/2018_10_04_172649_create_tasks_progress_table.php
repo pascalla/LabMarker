@@ -21,7 +21,6 @@ class CreateTasksProgressTable extends Migration
             $table->boolean('status');
             $table->float('marks');
             $table->timestamps();
-
         });
     }
 

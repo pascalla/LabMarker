@@ -35,8 +35,37 @@ layouts.app')
           @endif
 
           @if(auth()->user()->hasRole('student'))
-            @if(auth()->user()->allLabs()->count() > 0)
+            @if(auth()->user()->enrolledLabs()->count() > 0 || auth()->user()->archivedLabs()->count() > 0)
+              <h1>Current Labs</h1>
               @foreach($studentLabs as $studentLab)
+                <div class="card mt-5">
+                  <div class="card-header">{{ $studentLab["lab"]->course_code }}</div>
+                  <div class="card-body">
+                    <table class="table">
+                      <tr>
+                        <th>Task Name</th>
+                        <th>Marks</th>
+                        <th>Action</th>
+                      </tr>
+                      @foreach($studentLab["tasks"] as $key => $task)
+                      <tr>
+                        <td>{{ $task->name }}</td>
+                        <td>{{ $task->marks }}</td>
+                        <td>
+                          @if($studentLab["progress"]->get($key)->status == 0)
+                            <button class="btn btn-danger">Not Signed Off</button>
+                          @else
+                            <button class="btn btn-success">Signed Off</button>
+                          @endif
+                        </td>
+                      </tr>
+                      @endforeach
+                    </table>
+                  </div>
+                </div>
+              @endforeach
+              <h1>Archived Labs</h1>
+              @foreach($archivedLabs as $studentLab)
                 <div class="card mt-5">
                   <div class="card-header">{{ $studentLab["lab"]->course_code }}</div>
                   <div class="card-body">

@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\ArchivedLab;
+
 class Lab extends Model
 {
 
@@ -31,6 +33,22 @@ class Lab extends Model
     if($permissions->count() == 0){
       $student->removeRole('marker');
     }
+  }
+
+  public function archiveLab(){
+    // Create new Archived Lab
+    $archived_lab = new ArchivedLab;
+    $archived_lab->lecturer_id = $this->lecturer_id;
+    $archived_lab->course_code = $this->course_code;
+    $archived_lab->year = $this->year;
+    $archived_lab->save();
+
+    $tasks = $this->getTasks()->get();
+    foreach($tasks as $task){
+      $task->archive($archived_lab);
+    }
+
+    return $archived_lab;
   }
 
   // get list of tasks for the lab

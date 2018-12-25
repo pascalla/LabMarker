@@ -83,9 +83,14 @@ class StudentController extends Controller
 
     public function show($lab_id, $user_id){
       $user = User::findOrFail($user_id);
-
       $lab = Lab::findOrFail($lab_id);
 
+      // make sure student is enrolled
+      if(!$user->isEnrolled($lab)){
+        return redirect()->route('student.index', $lab_id);
+      }
+
+      // get labs
       $tasks = $lab->getTasks()->get();
 
       $progress = collect([]);

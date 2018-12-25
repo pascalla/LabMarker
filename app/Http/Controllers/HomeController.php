@@ -37,8 +37,9 @@ class HomeController extends Controller
         $user = Auth::user();
 
         $studentLabs = array();
+        $archivedStudentLabs = array();
 
-        foreach($user->allLabs()->get() as $lab){
+        foreach($user->enrolledLabs()->get() as $lab){
           $tasks = $lab->getTasks()->get();
           $progress = collect([]);
 
@@ -62,8 +63,27 @@ class HomeController extends Controller
 
         }
 
-        //dd($studentLabs);
+        foreach($user->archivedLabs()->get() as $lab){
+          $tasks = $lab->getTasks()->get();
+          $progress = collect([]);
 
-        return view('home')->with('labs', $labs)->with('studentLabs', $studentLabs);
+          foreach($tasks as $task){
+            // If task has been completed (aka database entry, push it to array)
+            if($user->checkArchivedTaskProgress($task)){
+              $progress->push($user->getArchivedTaskProgress($task)->first());
+            // else create a new task progress with status 0 and push to array
+            } else {
+              $taskProgress = new TaskProgress;
+              $taskProgress->user_id = $user->id;
+              $taskProgress->lab_id = $lab->id;
+              $taskProgress->task_id = $task->id;
+              $taskProgress->status = 0;
+              $progress->push($taskProgress);
+            }
+          }
+          $archivedStudentLabs[] = array('lab' => $lab, 'tasks' => $tasks, 'progress' => $progress);
+        }
+
+        return view('home')->with('labs', $labs)->with('studentLabs', $studentLabs)->with('archivedLabs', $archivedStudentLabs);
     }
 }

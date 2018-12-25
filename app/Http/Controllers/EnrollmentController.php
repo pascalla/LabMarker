@@ -127,9 +127,13 @@ class EnrollmentController extends Controller
     public function update($lab_id)
     {
         $lab = Lab::findOrFail($lab_id);
+        // create archived lab clone
+        $archived_lab = $lab->archiveLab();
+        // get all students
         $students = $lab->enrolledStudents()->get();
         foreach($students as $student){
-          $student->unenrollLab($lab);
+          // unenroll from current lab and add to archive
+          $student->unenrollLab($lab, $archived_lab);
         }
 
         Session::flash('success', 'Successfully reset year.');
