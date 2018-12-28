@@ -39,7 +39,7 @@ layouts.app')
               <h1>Current Labs</h1>
               @foreach($studentLabs as $studentLab)
                 <div class="card mt-5">
-                  <div class="card-header">{{ $studentLab["lab"]->course_code }}</div>
+                  <div class="card-header">{{ $studentLab["lab"]->course_code }} ({{ $studentLab["lab"]->year }})</div>
                   <div class="card-body">
                     <table class="table">
                       <tr>
@@ -67,7 +67,7 @@ layouts.app')
               <h1>Archived Labs</h1>
               @foreach($archivedLabs as $studentLab)
                 <div class="card mt-5">
-                  <div class="card-header">{{ $studentLab["lab"]->course_code }}</div>
+                  <div class="card-header">{{ $studentLab["lab"]->course_code }} ({{ $studentLab["lab"]->year }})</div>
                   <div class="card-body">
                     <table class="table">
                       <tr>

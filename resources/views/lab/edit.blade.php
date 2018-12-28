@@ -23,10 +23,6 @@
             <div class="card-body">
               {{ Form::open(array('url' => route('lab.update', $lab->id), 'method' => 'PUT')) }}
                 <div class="form-group">
-                  {{ Form::label('course_code', 'Course Code:')}}
-                  {{ Form::text('course_code', $lab->course_code, array('class' => 'form-control')) }}
-                </div>
-                <div class="form-group">
                   {{ Form::label('year', 'Year:')}}
                   {{ Form::text('year', $lab->year, array('class' => 'form-control')) }}
                 </div>

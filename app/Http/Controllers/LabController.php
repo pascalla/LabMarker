@@ -108,11 +108,12 @@ class LabController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-          'course_code' => 'required|unique:labs,course_code,' . $id,
+          //'course_code' => 'required|unique:labs,course_code,' . $id,
+          'year' => 'required',
         ]);
 
         $lab = Lab::findOrFail($id);
-        $lab->course_code = $request->course_code;
+        $lab->year = $request->year;
         $lab->save();
         Session::flash('success', 'Successfully updated lab.');
         return redirect()->route('lab.edit', $lab->id);

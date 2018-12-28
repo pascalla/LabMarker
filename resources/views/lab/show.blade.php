@@ -24,6 +24,7 @@
             <a href="{{ route('enrollment.index', $lab->id) }}"><button class="btn btn-primary">Enrollments</button></a>
             <a href="{{ route('marker.index', $lab->id) }}"><button class="btn btn-primary">Markers</button></a>
             <a href="{{ route('group.index', $lab->id) }}"><button class="btn btn-primary">Groups</button></a>
+            <a href="{{ route('lab.edit', $lab->id) }}"><button class="btn btn-primary">Edit Lab</button></a>
           </div>
           <div class="row">
             {{ Form::open(['route' => ['enrollment.update', $lab->id], 'method' => 'PUT', 'class' => 'form-reset d-inline']) }}
