@@ -2,6 +2,8 @@
 
 A web app used for easily tracking students lab progress. This uses authentication via the College of Science Intranet at Swansea University.
 
+This was custom built for the needs of CS labs.
+
 # Roles
 * Student role
 * Marker role to allow lab helpers to sign off students.
